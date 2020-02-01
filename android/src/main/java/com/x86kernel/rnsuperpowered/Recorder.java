@@ -1,10 +1,8 @@
 package com.x86kernel.rnsuperpowered;
 
 import android.Manifest;
-import android.util.Log;
 import android.content.pm.PackageManager;
-import android.support.v4.content.ContextCompat;
-
+import androidx.core.content.ContextCompat;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 public class Recorder {
