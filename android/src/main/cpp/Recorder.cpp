@@ -8,7 +8,9 @@
 
 #include "Recorder.h"
 
-#define log_print __android_log_print
+// __android_log_print(int prio, const char* tag, const char* fmt, ...)
+
+#define log_print(x) do {__android_log_print(ANDROID_LOG_INFO, "Recorder.cpp", x); } while(0)
 
 static bool audioProcessing (
         void * __unused clientData,
@@ -85,6 +87,9 @@ JNIEXPORT void Java_com_x86kernel_rnsuperpowered_Recorder_startRecord (
 ) {
     const char *dest = env->GetStringUTFChars(destPath, 0);
 
+    //log_print(("Recording to %s\r\n", dest));
+    __android_log_print(ANDROID_LOG_INFO, "Recorder.cpp", "Recording to %s\r\n", dest);
+
     recorder->start(dest);
 
     env->ReleaseStringUTFChars(destPath, dest);
@@ -95,5 +100,6 @@ JNIEXPORT void Java_com_x86kernel_rnsuperpowered_Recorder_stopRecord (
     JNIEnv* __unused env,
     jobject  __unused obj
 ) {
+    __android_log_print(ANDROID_LOG_INFO, "Recorder.cpp", "Stop recording\r\n");
 	recorder->stop();
 }

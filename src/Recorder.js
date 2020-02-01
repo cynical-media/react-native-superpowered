@@ -6,8 +6,16 @@ import {
 
 const { RNSuperpowered } = NativeModules
 
-const Recorder = {
-  init: () => {
+var recorderInstance = null;
+
+export default class Recorder {
+  
+  constructor() {
+    console.log("Initializing new recorder instance.");
+    this.init();
+  }
+
+  init = () => {
     if(Platform.OS === 'android') {
       return new Promise((resolve, reject) => {
         PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.RECORD_AUDIO)
@@ -18,15 +26,30 @@ const Recorder = {
               resolve(false);
           })
       })
+    }   
+  }
+
+  // --------------------------------------------------------------------------------------------
+  static inst(){
+    if (!recorderInstance) {
+      console.log("Creating new recorder instance.");
+      recorderInstance = new Recorder();
     }
-  },
-  start: ({ sampleRate, minSeconds, numChannels, applyFade } = {
-    sampleRate: 48000,
-    minSeconds: 0,
-    numChannels: 2,
-    applyFade: false,
-  }) => RNSuperpowered.startRecord(sampleRate, minSeconds, numChannels, applyFade),
-  stop: () => RNSuperpowered.stopRecord(),
+    return recorderInstance;
+  }  
+
+  start = ( 
+    sampleRate = 48000, 
+    minSeconds = 0, 
+    numChannels= true, 
+    applyFade = false) =>
+    {
+    RNSuperpowered.startRecord(sampleRate, minSeconds, numChannels, applyFade);
+  }
+  
+  stop = () => {
+    RNSuperpowered.stopRecord();
+  } 
 }
 
-export default Recorder
+

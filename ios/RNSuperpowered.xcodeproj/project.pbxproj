@@ -128,6 +128,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 58B511D21A9E6C8500147676;
@@ -193,7 +194,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../Superpowered;
+				HEADER_SEARCH_PATHS = (
+					../Superpowered,
+					"../../../ios/Pods/Headers/Public/React-Core/",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = ../Superpowered;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -233,7 +237,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../Superpowered;
+				HEADER_SEARCH_PATHS = (
+					../Superpowered,
+					"../../../ios/Pods/Headers/Public/React-Core/",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = ../Superpowered;
 				MTL_ENABLE_DEBUG_INFO = NO;

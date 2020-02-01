@@ -19,7 +19,6 @@ static dispatch_once_t onceToken;
             instance = [[Recorder alloc] initPrivate:sampleRate minSeconds:minSeconds numChannels:numChannels applyFade:applyFade];
         }
     });
-    
     return instance;
 }
 
