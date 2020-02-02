@@ -1,0 +1,3 @@
+[submodule "src_xplatform/sop"]
+	path = src_xplatform/sop
+	url = git@github.com:cfogelklou/sweet_osal_platform.git

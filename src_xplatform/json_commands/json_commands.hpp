@@ -4,7 +4,7 @@
 #include <string>
 
 // Sends a json command, gets a response.
-std::string jsonCommand(std::string &cmd);
+void jsonCommand(std::string &cmd);
 
 
 #endif

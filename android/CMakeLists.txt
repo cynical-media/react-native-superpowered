@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-set(THIS_PROJECT_DIR ${CMAKE_SOURCE_DIR})
+set(THIS_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(TOP_DIR ${THIS_PROJECT_DIR}/../)
+
+include(${TOP_DIR}/src_xplatform/sop/sop_src/LibraryFiles.cmake)
 
 file(TO_CMAKE_PATH ${PATH_TO_SUPERPOWERED} PATH_TO_SUPERPOWERED)
 
@@ -9,15 +11,18 @@ include_directories(
         ${TOP_DIR}/android/src/main/cpp
         ${PATH_TO_SUPERPOWERED}
         ${TOP_DIR}/json/include/
+        ${TOP_DIR}/src_xplatform
+        ${TOP_DIR}
 )
 
-file(GLOB SUPERPOWERED_JNI_SRC
+
+file(GLOB_RECURSE SUPERPOWERED_JNI_SRC
         ${TOP_DIR}/android/src/main/cpp/*.cpp
         ${TOP_DIR}/android/src/main/cpp/*.c
         ${TOP_DIR}/android/src/main/cpp/*.h
         ${TOP_DIR}/android/src/main/cpp/*.hpp
-        ${TOP_DIR}/src_json_to_superpowered/*.cpp
-        ${TOP_DIR}/src_json_to_superpowered/*.hpp
+        ${TOP_DIR}/src_xplatform/*.cpp
+        ${TOP_DIR}/src_xplatform/*.hpp
 )
 
 list(REMOVE_ITEM SUPERPOWERED_JNI_SRC src/main/cpp/Recorder.cpp)

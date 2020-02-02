@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15E7D1E723E71AB2009640BE /* json_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D1E623E71AB2009640BE /* json_commands.cpp */; };
 		92E483D3224E626E0083EE13 /* Recorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D2224E626E0083EE13 /* Recorder.mm */; };
 		92E483D7224E8EDA0083EE13 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */; };
 		92E483E3224E91A00083EE13 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D9224E90A40083EE13 /* SuperpoweredIOSAudioIO.mm */; };
@@ -28,6 +29,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNSuperpowered.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSuperpowered.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		15E7D1E523E71AB2009640BE /* json_commands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json_commands.hpp; path = ../src_xplatform/json_commands/json_commands.hpp; sourceTree = "<group>"; };
+		15E7D1E623E71AB2009640BE /* json_commands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_commands.cpp; path = ../src_xplatform/json_commands/json_commands.cpp; sourceTree = "<group>"; };
 		92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = ../Superpowered/libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
 		92E483D1224E625E0083EE13 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		92E483D2224E626E0083EE13 /* Recorder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Recorder.mm; sourceTree = "<group>"; };
@@ -62,9 +65,19 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		15E7D1E423E71A9C009640BE /* src_xplatform */ = {
+			isa = PBXGroup;
+			children = (
+				15E7D1E623E71AB2009640BE /* json_commands.cpp */,
+				15E7D1E523E71AB2009640BE /* json_commands.hpp */,
+			);
+			name = src_xplatform;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				15E7D1E423E71A9C009640BE /* src_xplatform */,
 				92E484D6224F53100083EE13 /* Audio.mm */,
 				92E484D5224F53030083EE13 /* Audio.h */,
 				92E483D9224E90A40083EE13 /* SuperpoweredIOSAudioIO.mm */,
@@ -146,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E7D1E723E71AB2009640BE /* json_commands.cpp in Sources */,
 				92E484D7224F53100083EE13 /* Audio.mm in Sources */,
 				92E483E3224E91A00083EE13 /* SuperpoweredIOSAudioIO.mm in Sources */,
 				92E483D3224E626E0083EE13 /* Recorder.mm in Sources */,
@@ -197,6 +211,9 @@
 				HEADER_SEARCH_PATHS = (
 					../Superpowered,
 					"../../../ios/Pods/Headers/Public/React-Core/",
+					../src_xplatform,
+					../json/include,
+					../,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = ../Superpowered;
@@ -240,6 +257,9 @@
 				HEADER_SEARCH_PATHS = (
 					../Superpowered,
 					"../../../ios/Pods/Headers/Public/React-Core/",
+					../src_xplatform,
+					../json/include,
+					../,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = ../Superpowered;

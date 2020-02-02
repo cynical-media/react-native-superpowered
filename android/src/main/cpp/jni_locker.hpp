@@ -6,53 +6,55 @@
 class JniLockerClass {
 private:
   // memsettable.
-  _JNIEnv *pEnv;
-  _jobject *jobj;
-  _jclass *jcls;
-  _jobject *jclsref;
+  _JNIEnv *mpEnv;
+  _jobject *mjobj;
+  _jclass *mjcls;
+  _jobject *mjclsref;
   int nesting;
 
 public:
 
   JniLockerClass()
-      : pEnv(nullptr)
-      , jobj(nullptr)
-      , jcls(nullptr)
-      , jclsref(nullptr)
+      : mpEnv(nullptr)
+      , mjobj(nullptr)
+      , mjcls(nullptr)
+      , mjclsref(nullptr)
       , nesting(0)
   {
   }
 
   void doEnterJni(_JNIEnv *pEnv, _jobject *jObj) {
     if (++nesting == 1) {
-      pEnv = pEnv;
-      jobj = jObj;
-      if (jObj){
-        jcls = pEnv->GetObjectClass(jobj);
-        jclsref = pEnv->NewGlobalRef(jcls);
-      }
+      mpEnv = pEnv;
+      mjobj = jObj;
+      mjcls = (jObj) ? pEnv->GetObjectClass(mjobj) : nullptr;
+      mjclsref = (mjcls) ? pEnv->NewGlobalRef(mjcls) : nullptr;
     }
   }
 
   void doExitJni() {
     if (--nesting == 0) {
-      if (jobj) {
-        pEnv->DeleteGlobalRef(jclsref);
-        pEnv = NULL;
+      if (mjobj) {
+        if (mjclsref) {
+          mpEnv->DeleteGlobalRef(mjclsref);
+        }
+        mpEnv = nullptr;
+        mjcls = nullptr;
+        mjclsref = nullptr;
       }
     }
   }
 
   _JNIEnv *getEnvPtr(){
-    return pEnv;
+    return mpEnv;
   }
 
   _jobject *getObjPtr(){
-    return jobj;
+    return mjobj;
   }
 
   _jclass *getClsPtr(){
-    return jcls;
+    return mjcls;
   }
 
 };

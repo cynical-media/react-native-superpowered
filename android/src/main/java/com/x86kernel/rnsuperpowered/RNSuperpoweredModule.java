@@ -95,4 +95,9 @@ public class RNSuperpoweredModule extends ReactContextBaseJavaModule {
       
       promise.resolve(response);
   }
+
+  @ReactMethod
+  public void jsonCommand(String jsonCmd){
+    SuperpoweredJni.inst().jsonCommand(jsonCmd);
+  }
 }
