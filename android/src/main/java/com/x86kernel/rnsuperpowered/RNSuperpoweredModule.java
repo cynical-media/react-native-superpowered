@@ -98,6 +98,6 @@ public class RNSuperpoweredModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void jsonCommand(String jsonCmd){
-    SuperpoweredJni.inst().jsonCommand(jsonCmd);
+    SuperpoweredJni.inst().nativeJsonCommand(jsonCmd);
   }
 }

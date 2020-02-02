@@ -1,13 +1,14 @@
 #include "jni_locker.hpp"
 #include "jni_utils.hpp"
 #include "Audio.h"
-#include "json_commands/json_commands.hpp"
 #include "osal/cs_task_locker.hpp"
 #include "phone_al/phone_al.hpp"
 #include "phone_al/json_handler.hpp"
+#include "phone_al/json_commands_impl.hpp"
 #include "utils/platform_log.h"
 #include "task_sched/task_sched.h"
 #include "osal/osal.h"
+#include "phone_al/json_commands.h"
 
 #include <SuperpoweredSimple.h>
 #include <SuperpoweredCPU.h>
@@ -92,9 +93,6 @@ typedef struct BnRunnableTag {
   }
 } BnRunnableT;
 
-extern "C" {
-extern void JsonRegisterCommands(void);
-}
 
 class HalClass: PhoneAL {
 public:
@@ -113,10 +111,6 @@ public:
   , midRunOnUiThread(0)
   , runs(0)
   {
-    OSALInit();
-    TaskSchedInit();
-    LOG_Init(android_LogFn, nullptr);
-    JsonRegisterCommands();
     PakSchedInit(this);
   }
 
@@ -179,8 +173,8 @@ public:
 
 static HalClass pakhal;
 
+// JsonHandler is implemented in ios OR Android.
 static JsonHandler jsonHandler;
-#include "phone_al/json_commands.h"
 
 // ////////////////////////////////////////////////////////////////////////////
 JsonHandler &JsonHandler::inst(){
@@ -205,8 +199,6 @@ void JsonHandler::OnJsonCompletedCb(
     pEnv->DeleteLocalRef(string);
   }
 }
-
-
 
 // ////////////////////////////////////////////////////////////////////////////
 void JsonHandler::jsonCommand(const char * const jsonCommand){
@@ -253,13 +245,15 @@ JNIEXPORT void Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_init(
 		JNIEnv *env,
     jclass obj
 ) {
-  GlobalsLocker lock(env, (jobject)obj);
-  (void)lock;
+  OSALInit();
+  TaskSchedInit();
+  LOG_Init(android_LogFn, nullptr);
+  JsonRegisterCommands();
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_jsonCommand(
+Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_nativeJsonCommand(
     JNIEnv *pEnv,
     jobject thiz,
     jstring jsonCmd)
@@ -271,7 +265,27 @@ Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_jsonCommand(
     JStringGetter cJson(pEnv, jsonCmd);
     sJson = cJson.getString();
   }
+  JsonHandler::inst().jsonCommand(sJson.c_str());
 
+}
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_nativeExecuteRunnable(JNIEnv *pEnv, jobject thiz,
+                                                                        jobject jDirectByteBuffer) {
+  GlobalsLocker jniGlobals(pEnv, thiz);
+  (void)jniGlobals;
+  jboolean jFalse = false;
+  LOG_ASSERT(jDirectByteBuffer);
+  if (jDirectByteBuffer) {
 
+    BnRunnableT *pRunnable = (BnRunnableT *)pEnv->GetDirectBufferAddress(jDirectByteBuffer);
+    LOG_ASSERT(pRunnable);
+    if (pRunnable->cb) {
+      pRunnable->cb(pRunnable->pPakObj);
+    } else {
 
+    }
+
+    pEnv->DeleteGlobalRef(pRunnable->jGlobalRef);
+  }
 }

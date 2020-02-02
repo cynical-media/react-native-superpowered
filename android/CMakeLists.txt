@@ -34,8 +34,8 @@ file(GLOB SUPERPOWERED_JNI_SRC
         ${OSAL_PLATFORM_SRC}
 
 
-        ${TOP_DIR}/src_xplatform/json_commands/*.cpp
-        ${TOP_DIR}/src_xplatform/json_commands/*.hpp
+        ${TOP_DIR}/src_xplatform/json_command_handlers/*.cpp
+        ${TOP_DIR}/src_xplatform/json_command_handlers/*.hpp
 )
 
 
