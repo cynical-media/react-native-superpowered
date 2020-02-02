@@ -1,10 +1,15 @@
 package com.x86kernel.rnsuperpowered;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Process;
 import android.util.Log;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -31,6 +36,50 @@ public class SuperpoweredJni {
                 mHandler = new Handler(looper);
             }
         }
+
+        final ReactApplicationContext ctx = RNSuperpoweredModule.getReactContextSingleton();
+        int permissionCheck = ContextCompat.checkSelfPermission(ctx.getCurrentActivity(),
+            Manifest.permission.RECORD_AUDIO);
+
+        boolean permissionGranted = permissionCheck == PackageManager.PERMISSION_GRANTED;
+        if (!permissionGranted){
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ctx.getCurrentActivity(),
+                Manifest.permission.RECORD_AUDIO)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(ctx.getCurrentActivity(),
+                    new String[]{Manifest.permission.RECORD_AUDIO},
+                    1);
+
+            }
+        }
+
+        permissionCheck = ContextCompat.checkSelfPermission(ctx.getCurrentActivity(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        permissionGranted = (permissionCheck == PackageManager.PERMISSION_GRANTED);
+        if (!permissionGranted){
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ctx.getCurrentActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(ctx.getCurrentActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    2);
+
+            }
+        }
+
     }
 
     private static SuperpoweredJni instance = null;
@@ -39,6 +88,8 @@ public class SuperpoweredJni {
         synchronized (syncObj){
             if (null == instance){
                 instance = new SuperpoweredJni();
+                final ReactApplicationContext ctx = RNSuperpoweredModule.getReactContextSingleton();
+                final String str = ctx.getCacheDir().toString();
                 SuperpoweredJni.init();
             }
         }

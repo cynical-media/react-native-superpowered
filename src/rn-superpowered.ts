@@ -172,3 +172,41 @@ export function GenerateTone(
     tone);
 }
 
+//------------------------------------------------------------
+export function StartRecording(
+  filePath: string,
+  sampleRate: number,
+  seconds: number,
+){
+  let dataObj: JsonCommands.CmdStartRecording = {
+    filePath: filePath,
+    sampleRate: sampleRate,
+    seconds: seconds,
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_start_recording, 
+    dataObj);
+}
+
+//------------------------------------------------------------
+export function StopRecording(){
+  let dataObj: JsonCommands.CmdStopRecording = {
+    dummy: "",
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_stop_recording, 
+    dataObj);
+}
+
+//------------------------------------------------------------
+export function StartPlayback(filePath:string){
+  let dataObj: JsonCommands.CmdStartPlayback = {
+    filePath: filePath,
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_start_playback, 
+    dataObj);
+}

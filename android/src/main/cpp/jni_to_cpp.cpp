@@ -10,17 +10,12 @@
 #include "osal/osal.h"
 #include "phone_al/json_commands.h"
 
-#include <SuperpoweredSimple.h>
-#include <SuperpoweredCPU.h>
-#include <SuperpoweredDecoder.h>
-#include <SuperpoweredRecorder.h>
+
 #include <jni.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <android/log.h>
-#include <SLES/OpenSLES.h>
-#include <SLES/OpenSLES_AndroidConfiguration.h>
 #include <thread>
 #include <mutex>
 
@@ -53,17 +48,12 @@ public:
     jnilocker.doEnterJni(pEnv, jObj);
   }
   ~GlobalsLocker() {
-    std::lock_guard<std::mutex> lock(myMutex);
+    CSTaskLocker locker;
     jnilocker.doExitJni();
   }
 private:
-  static std::mutex myMutex;
 
 };
-
-// Used to ensure only one entry at a time.
-std::mutex GlobalsLocker::myMutex;
-
 
 static void bn_fetchMethodIdIfNotDefined(jmethodID *pMeth, const char *name,
                                          const char *sig) {
@@ -239,7 +229,6 @@ JsonHandler::JsonHandler() {
 // ////////////////////////////////////////////////////////////////////////////
 
 
-
 extern "C"
 JNIEXPORT void Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_init(
 		JNIEnv *env,
@@ -249,6 +238,7 @@ JNIEXPORT void Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_init(
   TaskSchedInit();
   LOG_Init(android_LogFn, nullptr);
   JsonRegisterCommands();
+
 }
 
 extern "C"
