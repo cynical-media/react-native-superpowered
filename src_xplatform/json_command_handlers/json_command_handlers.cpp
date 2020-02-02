@@ -5,7 +5,7 @@
  * @file        pak_command_handlers.cpp
  * @brief       Actions for json commands from RN.
  */
-#include "json.hpp"
+#include "nlohmann/json.hpp"
 #include "phone_al/json_commands_impl.hpp"
 #include "utils/platform_log.h"
 #include "utils/convert_utils.h"

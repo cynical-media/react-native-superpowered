@@ -138,7 +138,7 @@ private:
 };
 
 // ///////////////////////////////////////////////////////////////////////
-RCT_EXPORT_METHOD(jsonCommandString:(NSString *)nsCmd)
+RCT_EXPORT_METHOD(jsonCommand:(NSString *)nsCmd)
 {
   const char *jsonCmd = [nsCmd cStringUsingEncoding: NSUTF8StringEncoding];
   JsonHandler::inst().jsonCommand(jsonCmd);

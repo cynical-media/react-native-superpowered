@@ -27,7 +27,7 @@ class SuperpoweredApi {
   constructor(){
     console.log("Creating Superpowered Class");
 
-    this.eventSubscription = jsonEmitter.addListener('JsonEvent', (e)=>{
+    this.eventSubscription = jsonEmitter.addListener('RnJsonEvent', (e)=>{
       this._handleJsonEvent(e);
     });    
   }
