@@ -4,6 +4,8 @@ import {
   Platform, NativeModules, NativeEventEmitter, DeviceEventEmitter
 } from 'react-native'
 
+import * as JsonCommands from './json_commands';
+
 const { RNSuperpowered } = NativeModules;
 
 // Depending on platform (at least in this version of RN) we need either a NativeEventEmitter or DeviceEventEmitter.
@@ -14,9 +16,8 @@ const jsonEmitter = (Platform.OS == 'ios')
 
 var superpoweredInst = null;
 
-
 //------------------------------------------------------------------------------
-class SuperpoweredApi {
+export class SuperpoweredApi {
 
   //eventListeners:any = {};
   eventListeners: Map<string, Array<(e:any)=>void>> = new Map();
@@ -28,6 +29,7 @@ class SuperpoweredApi {
     console.log("Creating Superpowered Class");
 
     this.eventSubscription = jsonEmitter.addListener('RnJsonEvent', (e)=>{
+      console.log("Received JSON event: " + JSON.stringify(e));
       this._handleJsonEvent(e);
     });    
   }
@@ -156,4 +158,17 @@ class SuperpoweredApi {
   }
 }
 
-export default SuperpoweredApi
+//------------------------------------------------------------
+export function GenerateTone(
+  freq:number, scale:number
+){
+  let tone: JsonCommands.CmdGenTone = {
+    freq:freq,
+    scale:scale
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_gen_tone, 
+    tone);
+}
+

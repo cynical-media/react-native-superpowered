@@ -5,15 +5,30 @@
 #import "phone_al/phone_al.hpp"
 #import "phone_al/json_commands.h"
 #import "phone_al/json_commands_impl.hpp"
+#import "osal/osal.h"
+#import "task_sched/task_sched.h"
 
 static RNSuperpowered * pReactSvcInst = nullptr;
+
+static void iosLogFn(void *pUserData, const uint32_t ts, const char *szLine, const int len) {
+  printf("%s", szLine);
+}
 
 @implementation RNSuperpowered
 
 - (dispatch_queue_t)methodQueue
 {
+  if (self != pReactSvcInst){
+    
+    if (nullptr == pReactSvcInst){
+      OSALInit();
+      TaskSchedInit();
+      LOG_Init(iosLogFn, nullptr);
+      JsonRegisterCommands();
+    }
     pReactSvcInst = self;
-    return dispatch_get_main_queue();
+  }
+  return dispatch_get_main_queue();
 }
 RCT_EXPORT_MODULE();
 

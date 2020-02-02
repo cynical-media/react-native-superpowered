@@ -75,13 +75,13 @@ static void bn_fetchMethodIdIfNotDefined(jmethodID *pMeth, const char *name,
 }
 
 
-typedef struct BnRunnableTag {
+typedef struct JniRunnableStructTag {
   PhoneAL::PAKAL_RunnableCb cb;
   void *pPakObj;
   int delayMs;
   jobject    jGlobalRef;
 
-  BnRunnableTag(
+  JniRunnableStructTag(
       PhoneAL::PAKAL_RunnableCb cb,
       void *pPakObj = nullptr,
       int delayMs = 0)
@@ -91,7 +91,7 @@ typedef struct BnRunnableTag {
       , jGlobalRef(nullptr)
   {
   }
-} BnRunnableT;
+} JniRunnableT;
 
 
 class HalClass: PhoneAL {
@@ -136,14 +136,14 @@ public:
     if (midRunOnUiThread) {
       runs++;
 
-      BnRunnableT * const pRunnable = new BnRunnableT(cb, pObj, delayMs);//(BnRunnableT *)pBytePtr;
+      JniRunnableT * const pRunnable = new JniRunnableT(cb, pObj, delayMs);//(JniRunnableT *)pBytePtr;
       LOG_ASSERT(pRunnable);
       if (pRunnable) {
 
         _JNIEnv * const pEnv = jnilocker.getEnvPtr();
         _jobject * const pObj = jnilocker.getObjPtr();
         _jclass * const pCls = jnilocker.getClsPtr();
-        jobject jDirectByteBuffer = pEnv->NewDirectByteBuffer(pRunnable, sizeof(BnRunnableT));
+        jobject jDirectByteBuffer = pEnv->NewDirectByteBuffer(pRunnable, sizeof(JniRunnableT));
         pRunnable->jGlobalRef = pEnv->NewGlobalRef(jDirectByteBuffer);
         pEnv->CallObjectMethod(pObj, midRunOnUiThread,
                                jDirectByteBuffer, (jint) delayMs);
@@ -160,7 +160,7 @@ public:
 // Cancels a runnable.  Uses the pointer passed back from RunOnUiThread.
   void CancelRunnable(void *pRunnableObj) override {
     LOG_ASSERT(pRunnableObj);
-    BnRunnableT *pRunnable = (BnRunnableT *)pRunnableObj;
+    JniRunnableT *pRunnable = (JniRunnableT *)pRunnableObj;
     LOG_VERBOSE(("bn_CancelRunnable(0x%x)", pRunnable));
     if (pRunnable) {
       pRunnable->cb = NULL;
@@ -278,7 +278,7 @@ Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_nativeExecuteRunnable(JNIEnv *
   LOG_ASSERT(jDirectByteBuffer);
   if (jDirectByteBuffer) {
 
-    BnRunnableT *pRunnable = (BnRunnableT *)pEnv->GetDirectBufferAddress(jDirectByteBuffer);
+    JniRunnableT *pRunnable = (JniRunnableT *)pEnv->GetDirectBufferAddress(jDirectByteBuffer);
     LOG_ASSERT(pRunnable);
     if (pRunnable->cb) {
       pRunnable->cb(pRunnable->pPakObj);
