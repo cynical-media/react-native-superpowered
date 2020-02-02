@@ -8,6 +8,7 @@ file(TO_CMAKE_PATH ${PATH_TO_SUPERPOWERED} PATH_TO_SUPERPOWERED)
 include_directories(
         ${TOP_DIR}/android/src/main/cpp
         ${PATH_TO_SUPERPOWERED}
+        ${TOP_DIR}/json/include/
 )
 
 file(GLOB SUPERPOWERED_JNI_SRC
