@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		15E7D1E723E71AB2009640BE /* json_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D1E623E71AB2009640BE /* json_commands.cpp */; };
+		15E7D1EF23E76CE6009640BE /* json_command_handlers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D1ED23E76CE6009640BE /* json_command_handlers.cpp */; };
 		92E483D3224E626E0083EE13 /* Recorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D2224E626E0083EE13 /* Recorder.mm */; };
 		92E483D7224E8EDA0083EE13 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */; };
 		92E483E3224E91A00083EE13 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D9224E90A40083EE13 /* SuperpoweredIOSAudioIO.mm */; };
 		92E484D7224F53100083EE13 /* Audio.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E484D6224F53100083EE13 /* Audio.mm */; };
-		B3E7B58A1CC2AC0600A0062D /* RNSuperpowered.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNSuperpowered.m */; };
+		B3E7B58A1CC2AC0600A0062D /* RNSuperpowered.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,8 +29,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNSuperpowered.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSuperpowered.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		15E7D1E523E71AB2009640BE /* json_commands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json_commands.hpp; path = ../src_xplatform/json_commands/json_commands.hpp; sourceTree = "<group>"; };
-		15E7D1E623E71AB2009640BE /* json_commands.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_commands.cpp; path = ../src_xplatform/json_commands/json_commands.cpp; sourceTree = "<group>"; };
+		15E7D1ED23E76CE6009640BE /* json_command_handlers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = json_command_handlers.cpp; path = ../src_xplatform/json_command_handlers/json_command_handlers.cpp; sourceTree = "<group>"; };
+		15E7D1EE23E76CE6009640BE /* json_command_handlers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json_command_handlers.hpp; path = ../src_xplatform/json_command_handlers/json_command_handlers.hpp; sourceTree = "<group>"; };
 		92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = ../Superpowered/libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
 		92E483D1224E625E0083EE13 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		92E483D2224E626E0083EE13 /* Recorder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Recorder.mm; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		92E484D5224F53030083EE13 /* Audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
 		92E484D6224F53100083EE13 /* Audio.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Audio.mm; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNSuperpowered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSuperpowered.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* RNSuperpowered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSuperpowered.m; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNSuperpowered.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,10 +68,66 @@
 		15E7D1E423E71A9C009640BE /* src_xplatform */ = {
 			isa = PBXGroup;
 			children = (
-				15E7D1E623E71AB2009640BE /* json_commands.cpp */,
-				15E7D1E523E71AB2009640BE /* json_commands.hpp */,
+				15E7D1EC23E76CC1009640BE /* json_command_handlers */,
+				15E7D1EA23E76CAF009640BE /* sop */,
 			);
 			name = src_xplatform;
+			sourceTree = "<group>";
+		};
+		15E7D1EA23E76CAF009640BE /* sop */ = {
+			isa = PBXGroup;
+			children = (
+				15E7D1EB23E76CB8009640BE /* sop_src */,
+			);
+			name = sop;
+			sourceTree = "<group>";
+		};
+		15E7D1EB23E76CB8009640BE /* sop_src */ = {
+			isa = PBXGroup;
+			children = (
+				15E7D22623E76D9A009640BE /* osal */,
+				15E7D22523E76D73009640BE /* utils */,
+				15E7D22423E76D6C009640BE /* task_sched */,
+				15E7D22323E76D5F009640BE /* mbedtls */,
+			);
+			name = sop_src;
+			sourceTree = "<group>";
+		};
+		15E7D1EC23E76CC1009640BE /* json_command_handlers */ = {
+			isa = PBXGroup;
+			children = (
+				15E7D1ED23E76CE6009640BE /* json_command_handlers.cpp */,
+				15E7D1EE23E76CE6009640BE /* json_command_handlers.hpp */,
+			);
+			name = json_command_handlers;
+			sourceTree = "<group>";
+		};
+		15E7D22323E76D5F009640BE /* mbedtls */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = mbedtls;
+			sourceTree = "<group>";
+		};
+		15E7D22423E76D6C009640BE /* task_sched */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = task_sched;
+			sourceTree = "<group>";
+		};
+		15E7D22523E76D73009640BE /* utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		15E7D22623E76D9A009640BE /* osal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = osal;
 			sourceTree = "<group>";
 		};
 		58B511D21A9E6C8500147676 = {
@@ -85,7 +141,7 @@
 				92E483D1224E625E0083EE13 /* Recorder.h */,
 				92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */,
 				B3E7B5881CC2AC0600A0062D /* RNSuperpowered.h */,
-				B3E7B5891CC2AC0600A0062D /* RNSuperpowered.m */,
+				B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				92E483D6224E8EDA0083EE13 /* Frameworks */,
 			);
@@ -159,11 +215,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15E7D1E723E71AB2009640BE /* json_commands.cpp in Sources */,
 				92E484D7224F53100083EE13 /* Audio.mm in Sources */,
 				92E483E3224E91A00083EE13 /* SuperpoweredIOSAudioIO.mm in Sources */,
+				15E7D1EF23E76CE6009640BE /* json_command_handlers.cpp in Sources */,
 				92E483D3224E626E0083EE13 /* Recorder.mm in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* RNSuperpowered.m in Sources */,
+				B3E7B58A1CC2AC0600A0062D /* RNSuperpowered.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,7 +268,8 @@
 					../Superpowered,
 					"../../../ios/Pods/Headers/Public/React-Core/",
 					../src_xplatform,
-					../json/include,
+					../src_xplatform/sop/ext/json/include,
+					../src_xplatform/sop/sop_src,
 					../,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -258,7 +315,8 @@
 					../Superpowered,
 					"../../../ios/Pods/Headers/Public/React-Core/",
 					../src_xplatform,
-					../json/include,
+					../src_xplatform/sop/ext/json/include,
+					../src_xplatform/sop/sop_src,
 					../,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
