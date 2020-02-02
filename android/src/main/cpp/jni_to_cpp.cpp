@@ -4,7 +4,10 @@
 #include "json_commands/json_commands.hpp"
 #include "osal/cs_task_locker.hpp"
 #include "phone_al/phone_al.hpp"
+#include "phone_al/json_handler.hpp"
 #include "utils/platform_log.h"
+#include "task_sched/task_sched.h"
+#include "osal/osal.h"
 
 #include <SuperpoweredSimple.h>
 #include <SuperpoweredCPU.h>
@@ -21,6 +24,24 @@
 #include <mutex>
 
 
+static void android_LogFn(void *pUserData, const uint32_t ts, const char *szLine, const int len) {
+#ifdef ANDROID
+#if FALSE
+  if (pEnv) {
+    bn_fetchMethodIdIfNotDefined(&ble.d.midTrace, "jniTrace",
+                                 "(Ljava/lang/String;)V");
+
+    jstring string = pEnv->NewStringUTF(szLine);
+    pEnv->CallVoidMethod(pObj, ble.d.midTrace, string);
+    pEnv->DeleteLocalRef(string);
+
+  } else
+#endif
+  {
+    __android_log_write(ANDROID_LOG_DEBUG, "JniNative:", szLine);
+  }
+#endif
+}
 
 static JniLockerClass jnilocker;
 
@@ -52,16 +73,15 @@ static void bn_fetchMethodIdIfNotDefined(jmethodID *pMeth, const char *name,
   }
 }
 
-typedef void (*PAKAL_RunnableCb)(void *pObj);
 
 typedef struct BnRunnableTag {
-  PAKAL_RunnableCb cb;
+  PhoneAL::PAKAL_RunnableCb cb;
   void *pPakObj;
   int delayMs;
   jobject    jGlobalRef;
 
   BnRunnableTag(
-      PAKAL_RunnableCb cb,
+      PhoneAL::PAKAL_RunnableCb cb,
       void *pPakObj = nullptr,
       int delayMs = 0)
       : cb(cb)
@@ -72,11 +92,32 @@ typedef struct BnRunnableTag {
   }
 } BnRunnableT;
 
+extern "C" {
+extern void JsonRegisterCommands(void);
+}
+
 class HalClass: PhoneAL {
 public:
+  jmethodID midTrace;
+  jmethodID midJsonResponse;
+
+  // jclass  jcls;
+  jmethodID midRunOnUiThread;
+  int runs;
+
+public:
   // //////////////////////////////////////////////////////////////////////////////////
-  HalClass(){
-    //PakSchedInit(this);
+  HalClass()
+  : midTrace(0)
+  , midJsonResponse(0)
+  , midRunOnUiThread(0)
+  , runs(0)
+  {
+    OSALInit();
+    TaskSchedInit();
+    LOG_Init(android_LogFn, nullptr);
+    JsonRegisterCommands();
+    PakSchedInit(this);
   }
 
   // //////////////////////////////////////////////////////////////////////////////////
@@ -95,22 +136,22 @@ public:
     void *rval = NULL;
     jboolean jFalse = false;
     //([BI)Ljava/lang/Object;
-    bn_fetchMethodIdIfNotDefined(&ble.d.midRunOnUiThread, "jniRunOnUiThread",
+    bn_fetchMethodIdIfNotDefined(&midRunOnUiThread, "jniRunOnUiThread",
                                  "(Ljava/lang/Object;I)Ljava/lang/Object;");
-    LOG_ASSERT(ble.d.midRunOnUiThread);
-    if (ble.d.midRunOnUiThread) {
+    LOG_ASSERT(midRunOnUiThread);
+    if (midRunOnUiThread) {
       runs++;
 
       BnRunnableT * const pRunnable = new BnRunnableT(cb, pObj, delayMs);//(BnRunnableT *)pBytePtr;
       LOG_ASSERT(pRunnable);
       if (pRunnable) {
 
-        _JNIEnv * const pEnv = locker.getEnvPtr();
-        _jobject * const pObj = locker.getObjPtr();
-        _jclass * const pCls = locker.getClsPtr();
+        _JNIEnv * const pEnv = jnilocker.getEnvPtr();
+        _jobject * const pObj = jnilocker.getObjPtr();
+        _jclass * const pCls = jnilocker.getClsPtr();
         jobject jDirectByteBuffer = pEnv->NewDirectByteBuffer(pRunnable, sizeof(BnRunnableT));
         pRunnable->jGlobalRef = pEnv->NewGlobalRef(jDirectByteBuffer);
-        pEnv->CallObjectMethod(pObj, ble.d.midRunOnUiThread,
+        pEnv->CallObjectMethod(pObj, midRunOnUiThread,
                                jDirectByteBuffer, (jint) delayMs);
       }
 
@@ -134,29 +175,77 @@ public:
     // Let the callback be called - only then is it safe to delete it.
   }
 
-// //////////////////////////////////////////////////////////////////////////////////
-  void TryMicrophone(void * pConfigUserData, const bool start) {
-    LOG_VERBOSE(("TryMicrophone()"));
-
-    // public void jniTrySubscribe(int, java.lang.String);
-    // descriptor: (Z)V
-    bn_fetchMethodIdIfNotDefined(&ble.d.midTryMicrophone, "jniTryMicrophone",
-                                 "(Z)V");
-
-    if (ble.d.midTryMicrophone) {
-      LOG_ASSERT(ble.d.midTryMicrophone);
-
-      jboolean jstart = (start) ? 1 : 0;
-      _JNIEnv * const pEnv = locker.getEnvPtr();
-      _jobject * const pObj = locker.getObjPtr();
-
-      pEnv->CallVoidMethod(pObj, ble.d.midTryMicrophone, jstart);
-    }
-  }
-
 };
 
 static HalClass pakhal;
+
+static JsonHandler jsonHandler;
+#include "phone_al/json_commands.h"
+
+// ////////////////////////////////////////////////////////////////////////////
+JsonHandler &JsonHandler::inst(){
+  return jsonHandler;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+void JsonHandler::OnJsonCompletedCb(
+    void * const pUserData, const bool status, const char * const pJsonEvent) {
+
+  _JNIEnv * const pEnv = jnilocker.getEnvPtr();
+  _jobject * const pObj = jnilocker.getObjPtr();
+
+  if (pEnv) {
+    bn_fetchMethodIdIfNotDefined(&pakhal.midJsonResponse, "jniJsonResponse",
+                                 "(Ljava/lang/String;)V");
+
+    LOG_ASSERT(pakhal.midJsonResponse);
+
+    jstring string = pEnv->NewStringUTF(pJsonEvent);
+    pEnv->CallVoidMethod(pObj, pakhal.midJsonResponse, string);
+    pEnv->DeleteLocalRef(string);
+  }
+}
+
+
+
+// ////////////////////////////////////////////////////////////////////////////
+void JsonHandler::jsonCommand(const char * const jsonCommand){
+  JsonCommand *pcmd = new JsonCommand(jsonCommand, OnJsonCompletedCb, this);
+  (void)pcmd;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+void JsonHandler::JsonEvent(void *const pConfigUserData,
+                            const char * const pJson,
+                            const int strLen) {
+
+  (void)pConfigUserData;
+  _JNIEnv * const pEnv = jnilocker.getEnvPtr();
+  _jobject * const pObj = jnilocker.getObjPtr();
+
+  if (pEnv) {
+    bn_fetchMethodIdIfNotDefined(
+        &pakhal.midJsonResponse,
+        "jniJsonResponse",
+        "(Ljava/lang/String;)V");
+
+    LOG_ASSERT(pakhal.midJsonResponse);
+
+    jstring string = pEnv->NewStringUTF(pJson);
+    pEnv->CallVoidMethod(pObj, pakhal.midJsonResponse, string);
+    pEnv->DeleteLocalRef(string);
+  }
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+JsonHandler::JsonHandler() {
+  LOG_ASSERT(this == &jsonHandler);
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+// END JsonHandler
+// ////////////////////////////////////////////////////////////////////////////
+
 
 
 extern "C"
@@ -183,6 +272,6 @@ Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_jsonCommand(
     sJson = cJson.getString();
   }
 
-  jsonCommand(sJson);
+
 
 }

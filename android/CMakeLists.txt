@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.4.1)
 set(THIS_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(TOP_DIR ${THIS_PROJECT_DIR}/../)
 
+set(SOP_TOP_DIR ${TOP_DIR}/src_xplatform/sop)
 include(${TOP_DIR}/src_xplatform/sop/sop_src/LibraryFiles.cmake)
 
 file(TO_CMAKE_PATH ${PATH_TO_SUPERPOWERED} PATH_TO_SUPERPOWERED)
@@ -10,20 +11,33 @@ file(TO_CMAKE_PATH ${PATH_TO_SUPERPOWERED} PATH_TO_SUPERPOWERED)
 include_directories(
         ${TOP_DIR}/android/src/main/cpp
         ${PATH_TO_SUPERPOWERED}
-        ${TOP_DIR}/json/include/
+        ${TOP_DIR}/src_xplatform/sop/ext/json/include/
+        ${TOP_DIR}/src_xplatform/sop/sop_src
         ${TOP_DIR}/src_xplatform
         ${TOP_DIR}
 )
 
+file(GLOB OSAL_PLATFORM_SRC
+        ${TASK_SCHED_SRC}
+        ${OSAL_SRC}
+        ${UTILS_SRC}
+        ${PHONE_AL_SRC}
+        ${MBEDTLS_BASICS_SRC}
+        ${BUF_IO_SRC}
+)
 
-file(GLOB_RECURSE SUPERPOWERED_JNI_SRC
+file(GLOB SUPERPOWERED_JNI_SRC
         ${TOP_DIR}/android/src/main/cpp/*.cpp
         ${TOP_DIR}/android/src/main/cpp/*.c
         ${TOP_DIR}/android/src/main/cpp/*.h
         ${TOP_DIR}/android/src/main/cpp/*.hpp
-        ${TOP_DIR}/src_xplatform/*.cpp
-        ${TOP_DIR}/src_xplatform/*.hpp
+        ${OSAL_PLATFORM_SRC}
+
+
+        ${TOP_DIR}/src_xplatform/json_commands/*.cpp
+        ${TOP_DIR}/src_xplatform/json_commands/*.hpp
 )
+
 
 list(REMOVE_ITEM SUPERPOWERED_JNI_SRC src/main/cpp/Recorder.cpp)
 list(REMOVE_ITEM SUPERPOWERED_JNI_SRC src/main/cpp/Audio.cpp)
