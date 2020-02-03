@@ -13,11 +13,11 @@
 
 #include "osal/platform_type.h"
 
+#include <SuperpoweredAdvancedAudioPlayer.h>
 #if (TARGET_OS_ANDROID)
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
 #include <AndroidIO/SuperpoweredAndroidAudioIO.h>
-#include <SuperpoweredAdvancedAudioPlayer.h>
 #include "Recorder.h"
 #endif
 
@@ -86,7 +86,9 @@ static bool onToneCmd(CmdHandlerNodeData * const pCmdData){
   return true;
 }
 
+#if (TARGET_OS_ANDROID > 0)
 static Recorder *recorder = NULL;
+#endif
 
 typedef struct StartRecordingCmdTag {
   std::string filePath;
@@ -104,13 +106,14 @@ static bool onStartRecordingCmd(CmdHandlerNodeData * const pCmdData){
   const json &jIn = pCmdData->jsonIn;
   StartRecordingCmd s = jIn;
   json &jOut = pCmdData->jsonOut;
-
+#if (TARGET_OS_ANDROID > 0)
   if (nullptr == recorder){
     recorder = new Recorder(
         s.filePath.c_str(),
         (int)(0.5+s.sampleRate/100.0),
         s.sampleRate, s.seconds, 2, false);
   }
+#endif
 
   return true;
 }
@@ -189,10 +192,10 @@ static void try_to_open(void *p, uint32_t){
     unsigned char res = decoder.decode(tmpBuf1, &nSamples1);
     switch (res) {
       case SUPERPOWEREDDECODER_EOF:
-        printf("Finished decoding user recording: %d\n", nSamples1);
+        LOG_TRACE(("Finished decoding user recording: %d\n", nSamples1));
         break;
       case SUPERPOWEREDDECODER_ERROR:
-        printf("Error decoding user recording\n");
+        LOG_TRACE(("Error decoding user recording\n"));
         break;
       case SUPERPOWEREDDECODER_OK:
       default:
@@ -218,7 +221,11 @@ static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
   const json &jIn = pCmdData->jsonIn;
   StartPlaybackCmd s = jIn;
   if (s.filePath.length() > 0 ) {
+#if (TARGET_OS_ANDROID)
     SuperpoweredAdvancedAudioPlayer::setTempFolder("/data/user/0/com.superpowered_test/cache");
+#else
+    SuperpoweredAdvancedAudioPlayer::setTempFolder("/tmp");
+#endif
     SuperpoweredDecoder *decoder = new SuperpoweredDecoder(
         SuperpoweredDecoderFullyDownloadedCallbackCbC,
         nullptr);
