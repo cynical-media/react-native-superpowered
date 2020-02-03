@@ -4,11 +4,11 @@
 #include "osal/cs_task_locker.hpp"
 #include "phone_al/phone_al.hpp"
 #include "phone_al/json_handler.hpp"
-#include "phone_al/json_commands_impl.hpp"
+#include "phone_al/json_commands.hpp"
 #include "utils/platform_log.h"
 #include "task_sched/task_sched.h"
 #include "osal/osal.h"
-#include "phone_al/json_commands.h"
+#include "json_command_handlers/json_command_handlers.hpp"
 
 
 #include <jni.h>

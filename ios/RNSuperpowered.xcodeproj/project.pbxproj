@@ -28,12 +28,10 @@
 		15E7D27023E76E89009640BE /* sl_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D25823E76E88009640BE /* sl_list.cpp */; };
 		15E7D27123E76E89009640BE /* uuid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D25A23E76E88009640BE /* uuid.cpp */; };
 		15E7D27223E76E89009640BE /* dl_list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D26323E76E89009640BE /* dl_list.cpp */; };
-		15E7D27323E76E89009640BE /* ble_utils_cpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D26623E76E89009640BE /* ble_utils_cpp.cpp */; };
 		15E7D27423E76E89009640BE /* platform_log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D26823E76E89009640BE /* platform_log.cpp */; };
 		15E7D27B23E76E9C009640BE /* task_sched.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D27523E76E9B009640BE /* task_sched.cpp */; };
 		15E7D27C23E76E9C009640BE /* task_trigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D27623E76E9C009640BE /* task_trigger.cpp */; };
 		15E7D27D23E76E9C009640BE /* task_rescheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D27923E76E9C009640BE /* task_rescheduler.cpp */; };
-		15E7D28B23E76EAD009640BE /* sha_alt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D28023E76EAC009640BE /* sha_alt.cpp */; };
 		15E7D28C23E76EAD009640BE /* threading_alt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D28123E76EAC009640BE /* threading_alt.cpp */; };
 		15E7D28D23E76EAD009640BE /* aes_alt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D28423E76EAC009640BE /* aes_alt.cpp */; };
 		15E7D28E23E76EAD009640BE /* mbedtls_port.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D28523E76EAC009640BE /* mbedtls_port.cpp */; };
@@ -53,6 +51,7 @@
 		15E7D2AA23E76F4C009640BE /* md2.c in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D29D23E76F4C009640BE /* md2.c */; };
 		15E7D2B223E770E5009640BE /* json_commands.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D2AE23E770E5009640BE /* json_commands.cpp */; };
 		15E7D2B323E770E5009640BE /* phone_al.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D2B123E770E5009640BE /* phone_al.cpp */; };
+		15F4734A23E8444900BA8B5C /* helper_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4734823E8444900BA8B5C /* helper_utils.cpp */; };
 		92E483D3224E626E0083EE13 /* Recorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D2224E626E0083EE13 /* Recorder.mm */; };
 		92E483D7224E8EDA0083EE13 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */; };
 		92E483E3224E91A00083EE13 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D9224E90A40083EE13 /* SuperpoweredIOSAudioIO.mm */; };
@@ -120,7 +119,6 @@
 		15E7D25B23E76E89009640BE /* util_vsnprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = util_vsnprintf.h; path = ../src_xplatform/sop/sop_src/utils/util_vsnprintf.h; sourceTree = "<group>"; };
 		15E7D25C23E76E89009640BE /* byteq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = byteq.h; path = ../src_xplatform/sop/sop_src/utils/byteq.h; sourceTree = "<group>"; };
 		15E7D25D23E76E89009640BE /* enum_table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = enum_table.h; path = ../src_xplatform/sop/sop_src/utils/enum_table.h; sourceTree = "<group>"; };
-		15E7D25E23E76E89009640BE /* ble_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ble_utils.h; path = ../src_xplatform/sop/sop_src/utils/ble_utils.h; sourceTree = "<group>"; };
 		15E7D25F23E76E89009640BE /* pack_push.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pack_push.h; path = ../src_xplatform/sop/sop_src/utils/pack_push.h; sourceTree = "<group>"; };
 		15E7D26023E76E89009640BE /* sl_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sl_list.h; path = ../src_xplatform/sop/sop_src/utils/sl_list.h; sourceTree = "<group>"; };
 		15E7D26123E76E89009640BE /* abstract.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = abstract.hpp; path = ../src_xplatform/sop/sop_src/utils/abstract.hpp; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 		15E7D26323E76E89009640BE /* dl_list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = dl_list.cpp; path = ../src_xplatform/sop/sop_src/utils/dl_list.cpp; sourceTree = "<group>"; };
 		15E7D26423E76E89009640BE /* pack_pop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pack_pop.h; path = ../src_xplatform/sop/sop_src/utils/pack_pop.h; sourceTree = "<group>"; };
 		15E7D26523E76E89009640BE /* dl_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dl_list.h; path = ../src_xplatform/sop/sop_src/utils/dl_list.h; sourceTree = "<group>"; };
-		15E7D26623E76E89009640BE /* ble_utils_cpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ble_utils_cpp.cpp; path = ../src_xplatform/sop/sop_src/utils/ble_utils_cpp.cpp; sourceTree = "<group>"; };
 		15E7D26723E76E89009640BE /* uuid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = uuid.hpp; path = ../src_xplatform/sop/sop_src/utils/uuid.hpp; sourceTree = "<group>"; };
 		15E7D26823E76E89009640BE /* platform_log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = platform_log.cpp; path = ../src_xplatform/sop/sop_src/utils/platform_log.cpp; sourceTree = "<group>"; };
 		15E7D27523E76E9B009640BE /* task_sched.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = task_sched.cpp; path = ../src_xplatform/sop/sop_src/task_sched/task_sched.cpp; sourceTree = "<group>"; };
@@ -137,9 +134,7 @@
 		15E7D27823E76E9C009640BE /* task_rescheduler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = task_rescheduler.hpp; path = ../src_xplatform/sop/sop_src/task_sched/task_rescheduler.hpp; sourceTree = "<group>"; };
 		15E7D27923E76E9C009640BE /* task_rescheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = task_rescheduler.cpp; path = ../src_xplatform/sop/sop_src/task_sched/task_rescheduler.cpp; sourceTree = "<group>"; };
 		15E7D27A23E76E9C009640BE /* task_trigger.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = task_trigger.hpp; path = ../src_xplatform/sop/sop_src/task_sched/task_trigger.hpp; sourceTree = "<group>"; };
-		15E7D27E23E76EAC009640BE /* sha512_alt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha512_alt.h; path = ../src_xplatform/sop/sop_src/mbedtls/sha512_alt.h; sourceTree = "<group>"; };
 		15E7D27F23E76EAC009640BE /* myconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myconfig.h; path = ../src_xplatform/sop/sop_src/mbedtls/myconfig.h; sourceTree = "<group>"; };
-		15E7D28023E76EAC009640BE /* sha_alt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha_alt.cpp; path = ../src_xplatform/sop/sop_src/mbedtls/sha_alt.cpp; sourceTree = "<group>"; };
 		15E7D28123E76EAC009640BE /* threading_alt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = threading_alt.cpp; path = ../src_xplatform/sop/sop_src/mbedtls/threading_alt.cpp; sourceTree = "<group>"; };
 		15E7D28223E76EAC009640BE /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = config.h; path = ../src_xplatform/sop/sop_src/mbedtls/config.h; sourceTree = "<group>"; };
 		15E7D28323E76EAC009640BE /* aes_alt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aes_alt.h; path = ../src_xplatform/sop/sop_src/mbedtls/aes_alt.h; sourceTree = "<group>"; };
@@ -148,7 +143,6 @@
 		15E7D28623E76EAC009640BE /* myconfig.h.bak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = myconfig.h.bak; path = ../src_xplatform/sop/sop_src/mbedtls/myconfig.h.bak; sourceTree = "<group>"; };
 		15E7D28723E76EAC009640BE /* threading_alt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = threading_alt.h; path = ../src_xplatform/sop/sop_src/mbedtls/threading_alt.h; sourceTree = "<group>"; };
 		15E7D28823E76EAC009640BE /* timing_alt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timing_alt.cpp; path = ../src_xplatform/sop/sop_src/mbedtls/timing_alt.cpp; sourceTree = "<group>"; };
-		15E7D28923E76EAC009640BE /* sha256_alt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha256_alt.h; path = ../src_xplatform/sop/sop_src/mbedtls/sha256_alt.h; sourceTree = "<group>"; };
 		15E7D28A23E76EAD009640BE /* timing_alt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timing_alt.h; path = ../src_xplatform/sop/sop_src/mbedtls/timing_alt.h; sourceTree = "<group>"; };
 		15E7D29123E76F4B009640BE /* sha512.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha512.c; path = ../src_xplatform/sop/ext/mbedtls/crypto/library/sha512.c; sourceTree = "<group>"; };
 		15E7D29223E76F4B009640BE /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = ../src_xplatform/sop/ext/mbedtls/crypto/library/sha1.c; sourceTree = "<group>"; };
@@ -169,6 +163,8 @@
 		15E7D2AF23E770E5009640BE /* json_commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json_commands.h; path = ../src_xplatform/sop/sop_src/phone_al/json_commands.h; sourceTree = "<group>"; };
 		15E7D2B023E770E5009640BE /* json_handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json_handler.hpp; path = ../src_xplatform/sop/sop_src/phone_al/json_handler.hpp; sourceTree = "<group>"; };
 		15E7D2B123E770E5009640BE /* phone_al.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phone_al.cpp; path = ../src_xplatform/sop/sop_src/phone_al/phone_al.cpp; sourceTree = "<group>"; };
+		15F4734823E8444900BA8B5C /* helper_utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = helper_utils.cpp; path = ../src_xplatform/sop/sop_src/utils/helper_utils.cpp; sourceTree = "<group>"; };
+		15F4734923E8444900BA8B5C /* helper_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helper_utils.h; path = ../src_xplatform/sop/sop_src/utils/helper_utils.h; sourceTree = "<group>"; };
 		92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = ../Superpowered/libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
 		92E483D1224E625E0083EE13 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
 		92E483D2224E626E0083EE13 /* Recorder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Recorder.mm; sourceTree = "<group>"; };
@@ -251,9 +247,6 @@
 				15E7D28523E76EAC009640BE /* mbedtls_port.cpp */,
 				15E7D27F23E76EAC009640BE /* myconfig.h */,
 				15E7D28623E76EAC009640BE /* myconfig.h.bak */,
-				15E7D28023E76EAC009640BE /* sha_alt.cpp */,
-				15E7D28923E76EAC009640BE /* sha256_alt.h */,
-				15E7D27E23E76EAC009640BE /* sha512_alt.h */,
 				15E7D28123E76EAC009640BE /* threading_alt.cpp */,
 				15E7D28723E76EAC009640BE /* threading_alt.h */,
 				15E7D28823E76EAC009640BE /* timing_alt.cpp */,
@@ -278,9 +271,9 @@
 		15E7D22523E76D73009640BE /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				15F4734823E8444900BA8B5C /* helper_utils.cpp */,
+				15F4734923E8444900BA8B5C /* helper_utils.h */,
 				15E7D26123E76E89009640BE /* abstract.hpp */,
-				15E7D26623E76E89009640BE /* ble_utils_cpp.cpp */,
-				15E7D25E23E76E89009640BE /* ble_utils.h */,
 				15E7D25523E76E88009640BE /* buf_alloc.cpp */,
 				15E7D24A23E76E88009640BE /* buf_alloc.hpp */,
 				15E7D24723E76E87009640BE /* byteq.c */,
@@ -478,9 +471,7 @@
 				15E7D2A323E76F4C009640BE /* platform.c in Sources */,
 				15E7D26D23E76E89009640BE /* buf_alloc.cpp in Sources */,
 				15E7D27B23E76E9C009640BE /* task_sched.cpp in Sources */,
-				15E7D28B23E76EAD009640BE /* sha_alt.cpp in Sources */,
 				15E7D24023E76E6E009640BE /* cs_task_locker.cpp in Sources */,
-				15E7D27323E76E89009640BE /* ble_utils_cpp.cpp in Sources */,
 				15E7D29E23E76F4C009640BE /* sha512.c in Sources */,
 				15E7D2A123E76F4C009640BE /* sha256.c in Sources */,
 				15E7D27423E76E89009640BE /* platform_log.cpp in Sources */,
@@ -502,6 +493,7 @@
 				15E7D24323E76E6E009640BE /* cs_locker.cpp in Sources */,
 				15E7D24123E76E6E009640BE /* cs_mutex_locker.cpp in Sources */,
 				15E7D2B323E770E5009640BE /* phone_al.cpp in Sources */,
+				15F4734A23E8444900BA8B5C /* helper_utils.cpp in Sources */,
 				15E7D28C23E76EAD009640BE /* threading_alt.cpp in Sources */,
 				15E7D24423E76E6E009640BE /* osal_random.cpp in Sources */,
 				15E7D2A523E76F4C009640BE /* base64.c in Sources */,

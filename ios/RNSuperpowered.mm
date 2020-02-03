@@ -3,8 +3,8 @@
 #import "Recorder.h"
 #import "Audio.h"
 #import "phone_al/phone_al.hpp"
-#import "phone_al/json_commands.h"
-#import "phone_al/json_commands_impl.hpp"
+#import "phone_al/json_commands.hpp"
+#import "json_command_handlers/json_command_handlers.hpp"
 #import "osal/osal.h"
 #import "task_sched/task_sched.h"
 
