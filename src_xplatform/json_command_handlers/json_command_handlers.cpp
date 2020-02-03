@@ -23,7 +23,7 @@
 
 
 #include "nlohmann/json.hpp"
-#include "phone_al/json_commands_impl.hpp"
+#include "phone_al/json_commands.hpp"
 #include "utils/platform_log.h"
 #include "utils/convert_utils.h"
 #include "utils/simple_string.hpp"
@@ -250,11 +250,6 @@ const CmdHandlerNode CmdHandlerNodeAry[] = {
 
 const int CmdHandlerNodeAryLen = sizeof(CmdHandlerNodeAry) / sizeof(CmdHandlerNodeAry[0]);
 
-
-extern "C" {
-
 void JsonRegisterCommands(void){
   JsonCommandInit(CmdHandlerNodeAry, CmdHandlerNodeAryLen);
-}
-
 }
