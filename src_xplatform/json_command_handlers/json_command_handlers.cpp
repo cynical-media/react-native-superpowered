@@ -1,7 +1,7 @@
 /**
 * COPYRIGHT    (c)  Applicaudia 2018
 * @file        json_command_handlers.cpp
-* @brief       Actions for json commands from RN.
+* @brief       Actions for json commands from RN, for now a template.
 */
 #include "json_command_handlers.hpp"
 
