@@ -203,7 +203,7 @@ export function StopRecording(){
 //------------------------------------------------------------
 export function StartPlayback(filePath:string){
   let dataObj: JsonCommands.CmdStartPlayback = {
-    filePath: filePath,
+    filePath: filePath
   };
   
   SuperpoweredApi.inst().jsonCommand(

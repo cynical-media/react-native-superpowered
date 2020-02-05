@@ -3,7 +3,12 @@
 
 #include <SuperpoweredSimple.h>
 #include <SuperpoweredCPU.h>
+#include <cstring>
 #include "superpowered_if/audio_io/audio_io.hpp"
+#include "utils/platform_log.h"
+#include "task_sched/task_sched.h"
+
+LOG_MODNAME("media_player.cpp");
 
 // ////////////////////////////////////////////////////////////////////////////
 MediaPlayer::MediaPlayer()
@@ -11,6 +16,8 @@ MediaPlayer::MediaPlayer()
 , mpAudioIO(nullptr)
 , mAudioMem8()
 , mFs(48000)
+, mNumFrames(0)
+, mOpening(false)
 {
   // TODO: Do in jni layer
   //  Superpowered::AdvancedAudioPlayer::setTempFolder(tempFolder);
@@ -28,19 +35,14 @@ MediaPlayer::~MediaPlayer(){
 }
 
 // ////////////////////////////////////////////////////////////////////////////
-//bool MediaPlayer::start(){
-//  mPlayer->play();
-//  Superpowered::CPU::setSustainedPerformanceMode(true);
-//}
-
-// ////////////////////////////////////////////////////////////////////////////
 void MediaPlayer::open(
     const char *path,
     Superpowered::httpRequest *customHTTPRequest,
     bool skipSilenceAtBeginning )
 {
   mPlayer->open(path, customHTTPRequest, skipSilenceAtBeginning);
-  Superpowered::CPU::setSustainedPerformanceMode(true);
+
+  waitForOpen();
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -51,19 +53,73 @@ void MediaPlayer::open(const char *path,
           bool skipSilenceAtBeginning)
 {
   mPlayer->open(path, offset, length, customHTTPRequest, skipSilenceAtBeginning);
-  Superpowered::CPU::setSustainedPerformanceMode(true);
+
+  waitForOpen();
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+void MediaPlayer::waitForOpenC(void *p, uint32_t) {
+  ((MediaPlayer *)p)->waitForOpen();
+
+}
+// ////////////////////////////////////////////////////////////////////////////
+void MediaPlayer::waitForOpen(){
+  bool ok = false;
+  bool failed = false;
+  Superpowered::PlayerEvent evt = mPlayer->getLatestEvent();
+  switch (evt) {
+    case Superpowered::PlayerEvent_None:
+      LOG_TRACE(("Superpowered::PlayerEvent_None\r\n"));
+      break;
+    case Superpowered::PlayerEvent_Opening:
+      LOG_TRACE(("Superpowered::PlayerEvent_Opening\r\n"));
+      break;
+    case Superpowered::PlayerEvent_OpenFailed:
+      LOG_TRACE(("Superpowered::PlayerEvent_OpenFailed\r\n"));
+      failed = true;
+      break;
+    case Superpowered::PlayerEvent_Opened:
+      LOG_TRACE(("Superpowered::PlayerEvent_Opened\r\n"));
+      ok = true;
+      break;
+    case Superpowered::PlayerEvent_ConnectionLost:
+      LOG_TRACE(("Superpowered::PlayerEvent_ConnectionLost\r\n"));
+      break;
+    case Superpowered::PlayerEvent_ProgressiveDownloadFinished:
+      LOG_TRACE(("Superpowered::PlayerEvent_ProgressiveDownloadFinished\r\n"));
+      break;
+    default:
+      LOG_TRACE(("Superpowered::Unknown\r\n"));
+      break;
+  }
+  if (!ok){
+    int errCode = mPlayer->getOpenErrorCode();
+    if (!failed) {
+      TaskSchedScheduleFn(TS_PRIO_APP, waitForOpenC, this, 200);
+      LOG_TRACE(("Superpowered::Got error code %d. Waiting\r\n", errCode));
+    }
+    else {
+      LOG_TRACE(("Superpowered::Got error code %d. Failing\r\n", errCode));
+    }
+  }
+  else {
+    startAudioIO();
+  }
 }
 
 // ////////////////////////////////////////////////////////////////////////////
 void MediaPlayer::startAudioIO() {
+
   mpAudioIO = AudioIO::createNew(
       mFs,                     // device native sampling rate
-      mFs/100,                 // device native buffer size
+      mFs / 100,                 // device native buffer size
       false,                   // enableInput
       true,                    // enableOutput
       audioProcessingC,        // process callback function
       this
   );
+  mPlayer->play();
+  Superpowered::CPU::setSustainedPerformanceMode(true);
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -75,6 +131,7 @@ bool MediaPlayer::stop() {
   return true;
 }
 
+
 // ////////////////////////////////////////////////////////////////////////////
 // This is called periodically by the audio engine.
 bool MediaPlayer::audioProcessingC (
@@ -85,6 +142,7 @@ bool MediaPlayer::audioProcessingC (
 ){
   MediaPlayer *pMedia = (MediaPlayer *)clientdata;
   if (nullptr == pMedia){
+    LOG_TRACE(("MediaPlayer::audioProcessingC return false\r\n"));
     return false;
   }
   else {
@@ -99,17 +157,27 @@ bool MediaPlayer::audioProcessing (
     int numberOfFrames,         // number of frames to process
     int samplerate              // current sample rate in Hz
 ) {
-  bool rval = false;
-  if (mPlayer) {
+  bool rval = true;
+  if ((mPlayer) && (numberOfFrames > 0) && (samplerate > 0)) {
+    mFs = samplerate;
     mPlayer->outputSamplerate = (unsigned int) samplerate;
-    //float playerOutput[numberOfFrames * 2];
+
+    //float playerOutput[numberOfFrames * 2] = {0};
     const size_t bufSize = sizeof(float)*numberOfFrames*2;
     float * playerOutput = (float *)mAudioMem8.u8DataPtr(bufSize, bufSize);
+    LOG_ASSERT((playerOutput));
+    mNumFrames += numberOfFrames;
 
     if (mPlayer->processStereo(playerOutput, false, (unsigned int) numberOfFrames)) {
       Superpowered::FloatToShortInt(playerOutput, audio, (unsigned int) numberOfFrames);
       rval = true;
     }
+    else {
+      memset(playerOutput, 0, bufSize);
+    }
+  }
+  if (!rval){
+    LOG_TRACE(("MediaPlayer::audioProcessing return false\r\n"));
   }
   return rval;
 }

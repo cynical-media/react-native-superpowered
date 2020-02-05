@@ -5,15 +5,10 @@
 */
 #include "json_command_handlers.hpp"
 
-#include <SuperpoweredSimple.h>
-#include <SuperpoweredCPU.h>
-#include <SuperpoweredDecoder.h>
-#include <SuperpoweredRecorder.h>
 #include "task_sched/task_sched.h"
-
 #include "osal/platform_type.h"
+#include "media_player/media_player.hpp"
 
-#include <SuperpoweredAdvancedAudioPlayer.h>
 #if (TARGET_OS_ANDROID)
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
@@ -56,6 +51,32 @@ static const char cmd_gen_tone[] = "cmd_gen_tone";
 static const char cmd_start_recording[] = "cmd_start_recording";
 static const char cmd_stop_recording[] = "cmd_stop_recording";
 static const char cmd_start_playback[] = "cmd_start_playback";
+
+class MPHolder {
+public:
+
+  static MPHolder &inst(){
+    static MPHolder theInst;
+    return theInst;
+  }
+
+  MPHolder()
+  : mpMedia(new MediaPlayer())
+  {
+
+  }
+
+  ~MPHolder(){
+    delete mpMedia;
+  }
+
+  MediaPlayer *getMP(){
+    return mpMedia;
+  }
+
+private:
+  MediaPlayer *const mpMedia;
+};
 
 static bool OnUnhandledCmd(CmdHandlerNodeData * const pCmdData) {
   const json &jIn = pCmdData->jsonIn;
@@ -130,99 +151,13 @@ typedef struct StartPlaybackCmdTag {
 void from_json(const nlohmann::json& j, StartPlaybackCmd& s) {
   s.filePath = j.value("filePath", "");
 }
-
-static void SuperpoweredDecoderID3CallbackCbC(
-    void *clientData,
-    void *frameName,
-    void *frameData,
-    int frameDataSize){
-
-}
-
-static void SuperpoweredDecoderFullyDownloadedCallbackCbC(
-    void *clientData,
-    Superpowered::Decoder *decoder){
-
-  LOG_TRACE(("mp3 fully downloaded\r\n"));
-}
-
-struct decodeInfo{
-  Superpowered::Decoder *decoder;
-  std::string filepath;
-
-  decodeInfo(
-      Superpowered::Decoder *decoder
-      , const char *filepath)
-      : decoder(decoder)
-      , filepath(filepath)
-  {
-
-  }
-
-};
-
-static void try_to_open(void *p, uint32_t){
-#if 0
-  struct decodeInfo *pDecodeInf = (struct decodeInfo *)p;
-  int statCode = 0;
-  auto &decoder = *pDecodeInf->decoder;
-  const char *errCode = decoder.open(
-      pDecodeInf->filepath.c_str(),
-      false,
-      0,
-      0,
-      0,
-      0,
-      &statCode);
-  if (nullptr == errCode){
-    const unsigned int numberOfSamples = decoder.samplesPerFrame;
-    short int *tmpBuf1 = (short int *) malloc(numberOfSamples * 4 + 16384);
-    unsigned int nSamples1 = 0;
-    unsigned char res = decoder.decode(tmpBuf1, &nSamples1);
-    switch (res) {
-      case SUPERPOWEREDDECODER_EOF:
-        LOG_TRACE(("Finished decoding user recording: %d\n", nSamples1));
-        break;
-      case SUPERPOWEREDDECODER_ERROR:
-        LOG_TRACE(("Error decoding user recording\n"));
-        break;
-      case SUPERPOWEREDDECODER_OK:
-      default:
-        break;
-    }
-
-    free(tmpBuf1);
-
-    delete pDecodeInf;
-  }
-  else {
-    LOG_TRACE(("Got an error: %s\r\n", errCode));
-    if (statCode == StatusCode_Progress) {
-      TaskSchedScheduleFn(TS_PRIO_APP, try_to_open, p, 500);
-    }
-    else {
-      delete pDecodeInf;
-    }
-  }
-#endif
-}
-
 static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
   const json &jIn = pCmdData->jsonIn;
   StartPlaybackCmd s = jIn;
   if (s.filePath.length() > 0 ) {
-#if (TARGET_OS_ANDROID)
-    Superpowered::AdvancedAudioPlayer::setTempFolder("/data/user/0/com.superpowered_test/cache");
-#else
-    Superpowered::AdvancedAudioPlayer::setTempFolder("/tmp");
-#endif
-    /*Superpowered::Decoder *decoder = new Superpowered::Decoder(
-        SuperpoweredDecoderFullyDownloadedCallbackCbC,
-        nullptr);*/
-
-    //struct decodeInfo *pDecodeInf = new decodeInfo(decoder, s.filePath.c_str());
-    //try_to_open(pDecodeInf, 0);
-
+    LOG_TRACE(("s.filepath = %s", s.filePath.c_str()));
+    MediaPlayer *player = MPHolder::inst().getMP();
+    player->open(s.filePath.c_str());
   }
   json &jOut = pCmdData->jsonOut;
   (void)jOut;

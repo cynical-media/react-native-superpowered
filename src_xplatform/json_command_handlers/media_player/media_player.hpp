@@ -27,6 +27,10 @@ public:
   bool stop();
 
 private:
+
+  static void waitForOpenC(void *p, uint32_t);
+  void waitForOpen();
+
   static bool audioProcessingC (
       void * clientdata, // custom pointer
       short int *audio,           // output buffer
@@ -47,6 +51,8 @@ private:
   AudioIO *mpAudioIO;
   sstring mAudioMem8;
   unsigned int mFs;
+  uint64_t mNumFrames;
+  bool mOpening;
 };
 
 
