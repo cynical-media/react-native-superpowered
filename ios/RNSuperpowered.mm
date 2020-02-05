@@ -1,7 +1,5 @@
 
 #import "RNSuperpowered.h"
-#import "Recorder.h"
-#import "Audio.h"
 #import "phone_al/phone_al.hpp"
 #import "phone_al/json_commands.hpp"
 #import "json_command_handlers/json_command_handlers.hpp"
@@ -32,6 +30,7 @@ static void iosLogFn(void *pUserData, const uint32_t ts, const char *szLine, con
 }
 RCT_EXPORT_MODULE();
 
+#if 0
 RCT_EXPORT_METHOD(startRecord:(NSInteger)sampleRate minSeconds:(NSInteger)minSeconds numChannels:(NSInteger)numChannels applyFade:(BOOL)applyFade) {
     Recorder *recorder = [Recorder createInstance: sampleRate minSeconds:minSeconds numChannels:numChannels applyFade:applyFade];
     
@@ -91,6 +90,7 @@ RCT_REMAP_METHOD(process,
         reject(exception.name, exception.reason, nil);
     }
 }
+#endif
 
 // /////////////////////////////////////////////////////////////////////////////
 // Return an array of the events softed by this object.

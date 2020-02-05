@@ -214,7 +214,7 @@ static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
 #if (TARGET_OS_ANDROID)
     Superpowered::AdvancedAudioPlayer::setTempFolder("/data/user/0/com.superpowered_test/cache");
 #else
-    SuperpoweredAdvancedAudioPlayer::setTempFolder("/tmp");
+    Superpowered::AdvancedAudioPlayer::setTempFolder("/tmp");
 #endif
     /*Superpowered::Decoder *decoder = new Superpowered::Decoder(
         SuperpoweredDecoderFullyDownloadedCallbackCbC,

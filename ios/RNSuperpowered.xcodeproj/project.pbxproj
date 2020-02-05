@@ -53,13 +53,12 @@
 		15E7D2B323E770E5009640BE /* phone_al.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15E7D2B123E770E5009640BE /* phone_al.cpp */; };
 		15F4734A23E8444900BA8B5C /* helper_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15F4734823E8444900BA8B5C /* helper_utils.cpp */; };
 		83AC90E623EA6E3C00C5F2B2 /* phone_al_uithread_runner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90E423EA6E3C00C5F2B2 /* phone_al_uithread_runner.cpp */; };
-		83AC90F123EA709800C5F2B2 /* SuperpoweredtvOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90E923EA709700C5F2B2 /* SuperpoweredtvOSAudioIO.mm */; };
-		83AC90F223EA709800C5F2B2 /* SuperpoweredOSXAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90EA23EA709700C5F2B2 /* SuperpoweredOSXAudioIO.mm */; };
 		83AC90F323EA709800C5F2B2 /* SuperpoweredIOSAudioIO.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90EC23EA709700C5F2B2 /* SuperpoweredIOSAudioIO.mm */; };
 		83AC90F423EA709800C5F2B2 /* SuperpoweredNBandEQ.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90ED23EA709700C5F2B2 /* SuperpoweredNBandEQ.cpp */; };
-		92E483D3224E626E0083EE13 /* Recorder.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E483D2224E626E0083EE13 /* Recorder.mm */; };
+		83AC90FA23EA7C5D00C5F2B2 /* audio_io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90F923EA7C5D00C5F2B2 /* audio_io.cpp */; };
+		83AC90FD23EA7C7100C5F2B2 /* audio_io_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90FB23EA7C7100C5F2B2 /* audio_io_ios.cpp */; };
+		83AC90FF23EA7C9100C5F2B2 /* audio_io_ios_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90FE23EA7C9100C5F2B2 /* audio_io_ios_mm.mm */; };
 		92E483D7224E8EDA0083EE13 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */; };
-		92E484D7224F53100083EE13 /* Audio.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92E484D6224F53100083EE13 /* Audio.mm */; };
 		B3E7B58A1CC2AC0600A0062D /* RNSuperpowered.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */; };
 /* End PBXBuildFile section */
 
@@ -172,23 +171,20 @@
 		83AC90E323EA6E3C00C5F2B2 /* json_commands.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = json_commands.hpp; path = ../src_xplatform/sop/sop_src/phone_al/json_commands.hpp; sourceTree = "<group>"; };
 		83AC90E423EA6E3C00C5F2B2 /* phone_al_uithread_runner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = phone_al_uithread_runner.cpp; path = ../src_xplatform/sop/sop_src/phone_al/phone_al_uithread_runner.cpp; sourceTree = "<group>"; };
 		83AC90E523EA6E3C00C5F2B2 /* phone_al_uithread_runner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = phone_al_uithread_runner.hpp; path = ../src_xplatform/sop/sop_src/phone_al/phone_al_uithread_runner.hpp; sourceTree = "<group>"; };
-		83AC90E923EA709700C5F2B2 /* SuperpoweredtvOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SuperpoweredtvOSAudioIO.mm; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredtvOSAudioIO.mm; sourceTree = "<group>"; };
-		83AC90EA23EA709700C5F2B2 /* SuperpoweredOSXAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SuperpoweredOSXAudioIO.mm; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredOSXAudioIO.mm; sourceTree = "<group>"; };
-		83AC90EB23EA709700C5F2B2 /* SuperpoweredtvOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredtvOSAudioIO.h; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredtvOSAudioIO.h; sourceTree = "<group>"; };
 		83AC90EC23EA709700C5F2B2 /* SuperpoweredIOSAudioIO.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SuperpoweredIOSAudioIO.mm; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredIOSAudioIO.mm; sourceTree = "<group>"; };
 		83AC90ED23EA709700C5F2B2 /* SuperpoweredNBandEQ.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SuperpoweredNBandEQ.cpp; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredNBandEQ.cpp; sourceTree = "<group>"; };
 		83AC90EE23EA709800C5F2B2 /* SuperpoweredNBandEQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredNBandEQ.h; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredNBandEQ.h; sourceTree = "<group>"; };
 		83AC90EF23EA709800C5F2B2 /* SuperpoweredIOSAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredIOSAudioIO.h; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredIOSAudioIO.h; sourceTree = "<group>"; };
-		83AC90F023EA709800C5F2B2 /* SuperpoweredOSXAudioIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperpoweredOSXAudioIO.h; path = ../Superpowered/Superpowered/OpenSource/SuperpoweredOSXAudioIO.h; sourceTree = "<group>"; };
+		83AC90F823EA7C5D00C5F2B2 /* audio_io.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = audio_io.hpp; path = ../src_xplatform/superpowered_if/audio_io/audio_io.hpp; sourceTree = "<group>"; };
+		83AC90F923EA7C5D00C5F2B2 /* audio_io.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_io.cpp; path = ../src_xplatform/superpowered_if/audio_io/audio_io.cpp; sourceTree = "<group>"; };
+		83AC90FB23EA7C7100C5F2B2 /* audio_io_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_io_ios.cpp; path = ../src_xplatform/superpowered_if/audio_io/ios/audio_io_ios.cpp; sourceTree = "<group>"; };
+		83AC90FC23EA7C7100C5F2B2 /* audio_io_ios.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = audio_io_ios.hpp; path = ../src_xplatform/superpowered_if/audio_io/ios/audio_io_ios.hpp; sourceTree = "<group>"; };
+		83AC90FE23EA7C9100C5F2B2 /* audio_io_ios_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = audio_io_ios_mm.mm; path = ../src_xplatform/superpowered_if/audio_io/ios/audio_io_ios_mm.mm; sourceTree = "<group>"; };
 		92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = ../Superpowered/libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
-		92E483D1224E625E0083EE13 /* Recorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Recorder.h; sourceTree = "<group>"; };
-		92E483D2224E626E0083EE13 /* Recorder.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Recorder.mm; sourceTree = "<group>"; };
 		92E483DB224E90DD0083EE13 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		92E483DD224E90E80083EE13 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		92E483DF224E90EF0083EE13 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		92E483E1224E90FF0083EE13 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		92E484D5224F53030083EE13 /* Audio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
-		92E484D6224F53100083EE13 /* Audio.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = Audio.mm; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNSuperpowered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSuperpowered.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RNSuperpowered.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +212,7 @@
 		15E7D1E423E71A9C009640BE /* src_xplatform */ = {
 			isa = PBXGroup;
 			children = (
+				83AC90F523EA7BBD00C5F2B2 /* superpowered_if */,
 				15E7D1EC23E76CC1009640BE /* json_command_handlers */,
 				15E7D1EA23E76CAF009640BE /* sop */,
 			);
@@ -394,21 +391,41 @@
 				83AC90EC23EA709700C5F2B2 /* SuperpoweredIOSAudioIO.mm */,
 				83AC90ED23EA709700C5F2B2 /* SuperpoweredNBandEQ.cpp */,
 				83AC90EE23EA709800C5F2B2 /* SuperpoweredNBandEQ.h */,
-				83AC90F023EA709800C5F2B2 /* SuperpoweredOSXAudioIO.h */,
-				83AC90EA23EA709700C5F2B2 /* SuperpoweredOSXAudioIO.mm */,
-				83AC90EB23EA709700C5F2B2 /* SuperpoweredtvOSAudioIO.h */,
-				83AC90E923EA709700C5F2B2 /* SuperpoweredtvOSAudioIO.mm */,
 				15E7D1E423E71A9C009640BE /* src_xplatform */,
-				92E484D6224F53100083EE13 /* Audio.mm */,
-				92E484D5224F53030083EE13 /* Audio.h */,
-				92E483D2224E626E0083EE13 /* Recorder.mm */,
-				92E483D1224E625E0083EE13 /* Recorder.h */,
 				92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */,
 				B3E7B5881CC2AC0600A0062D /* RNSuperpowered.h */,
 				B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				92E483D6224E8EDA0083EE13 /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		83AC90F523EA7BBD00C5F2B2 /* superpowered_if */ = {
+			isa = PBXGroup;
+			children = (
+				83AC90F623EA7BCE00C5F2B2 /* audio_io */,
+			);
+			name = superpowered_if;
+			sourceTree = "<group>";
+		};
+		83AC90F623EA7BCE00C5F2B2 /* audio_io */ = {
+			isa = PBXGroup;
+			children = (
+				83AC90F923EA7C5D00C5F2B2 /* audio_io.cpp */,
+				83AC90F823EA7C5D00C5F2B2 /* audio_io.hpp */,
+				83AC90F723EA7BDA00C5F2B2 /* ios */,
+			);
+			name = audio_io;
+			sourceTree = "<group>";
+		};
+		83AC90F723EA7BDA00C5F2B2 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				83AC90FE23EA7C9100C5F2B2 /* audio_io_ios_mm.mm */,
+				83AC90FB23EA7C7100C5F2B2 /* audio_io_ios.cpp */,
+				83AC90FC23EA7C7100C5F2B2 /* audio_io_ios.hpp */,
+			);
+			name = ios;
 			sourceTree = "<group>";
 		};
 		92E483D6224E8EDA0083EE13 /* Frameworks */ = {
@@ -480,8 +497,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15E7D2A423E76F4C009640BE /* md5.c in Sources */,
-				92E484D7224F53100083EE13 /* Audio.mm in Sources */,
-				83AC90F223EA709800C5F2B2 /* SuperpoweredOSXAudioIO.mm in Sources */,
 				15E7D23E23E76E6E009640BE /* mempools.cpp in Sources */,
 				15E7D28F23E76EAD009640BE /* timing_alt.cpp in Sources */,
 				15E7D26E23E76E89009640BE /* cnv_utils.cpp in Sources */,
@@ -502,22 +517,23 @@
 				15E7D2A123E76F4C009640BE /* sha256.c in Sources */,
 				15E7D27423E76E89009640BE /* platform_log.cpp in Sources */,
 				15E7D27123E76E89009640BE /* uuid.cpp in Sources */,
+				83AC90FA23EA7C5D00C5F2B2 /* audio_io.cpp in Sources */,
 				15E7D2A223E76F4C009640BE /* hmac_drbg.c in Sources */,
 				15E7D2A623E76F4C009640BE /* md.c in Sources */,
-				92E483D3224E626E0083EE13 /* Recorder.mm in Sources */,
 				15E7D2A923E76F4C009640BE /* threading.c in Sources */,
 				15E7D2A723E76F4C009640BE /* timing.c in Sources */,
 				15E7D26F23E76E89009640BE /* convert_utils.cpp in Sources */,
+				83AC90FF23EA7C9100C5F2B2 /* audio_io_ios_mm.mm in Sources */,
 				15E7D28E23E76EAD009640BE /* mbedtls_port.cpp in Sources */,
 				15E7D2B223E770E5009640BE /* json_commands.cpp in Sources */,
 				15E7D23D23E76E6E009640BE /* osal_entropy.cpp in Sources */,
 				15E7D24523E76E6E009640BE /* osal.cpp in Sources */,
 				83AC90E623EA6E3C00C5F2B2 /* phone_al_uithread_runner.cpp in Sources */,
+				83AC90FD23EA7C7100C5F2B2 /* audio_io_ios.cpp in Sources */,
 				15E7D27023E76E89009640BE /* sl_list.cpp in Sources */,
 				15E7D27C23E76E9C009640BE /* task_trigger.cpp in Sources */,
 				15E7D23F23E76E6E009640BE /* endian_convert.cpp in Sources */,
 				15E7D26C23E76E89009640BE /* util_vsnprintf.cpp in Sources */,
-				83AC90F123EA709800C5F2B2 /* SuperpoweredtvOSAudioIO.mm in Sources */,
 				15E7D24323E76E6E009640BE /* cs_locker.cpp in Sources */,
 				15E7D24123E76E6E009640BE /* cs_mutex_locker.cpp in Sources */,
 				15E7D2B323E770E5009640BE /* phone_al.cpp in Sources */,
