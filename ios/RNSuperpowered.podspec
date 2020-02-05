@@ -6,12 +6,12 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                   RNSuperpowered
                    DESC
-  s.homepage     = "https://github.com/x86kernel/react-native-superpowered"
+  s.homepage     = "https://github.com/cfogelklou/react-native-superpowered"
   s.license      = "MIT"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-  s.author             = { "author" => "x86kernel@gmail.com" }
+  s.author             = { "author" => "chris.fogelklou@gmail.com" }
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/x86kernel/react-native-superpowered.git", :tag => "master" }
+  s.source       = { :git => "https://github.com/cfogelklou/react-native-superpowered.git", :tag => "master" }
   s.source_files  = "RNSuperpowered/**/*.{h,m}"
   s.requires_arc = true
   s.frameworks = 'MediaPlayer'
