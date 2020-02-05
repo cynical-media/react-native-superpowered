@@ -39,6 +39,11 @@ file(GLOB SUPERPOWERED_JNI_SRC
 
         ${TOP_DIR}/src_xplatform/json_command_handlers/*.cpp
         ${TOP_DIR}/src_xplatform/json_command_handlers/*.hpp
+
+        ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/*.cpp
+        ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/*.hpp
+        ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/android/*.cpp
+        ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/android/*.hpp
 )
 
 add_library (

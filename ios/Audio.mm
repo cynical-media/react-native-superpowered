@@ -1,6 +1,6 @@
 #import "Audio.h"
 #import "SuperpoweredAdvancedAudioPlayer.h"
-#import "SuperpoweredIOSAudioIO.h"
+#import "OpenSource/SuperpoweredIOSAudioIO.h"
 #import "SuperpoweredEcho.h"
 #import "SuperpoweredSimple.h"
 #import "SuperpoweredDecoder.h"
