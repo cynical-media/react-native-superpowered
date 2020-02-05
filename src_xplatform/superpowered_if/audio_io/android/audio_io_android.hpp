@@ -28,17 +28,17 @@ public:
 
 /// @brief Call this in the main activity's onResume() method.
 /// Calling this is important if you'd like to save battery. When there is no audio playing and the app goes to the background, it will automatically stop audio input and/or output.
-  void onForeground();
+  void onForeground() override;
 
 /// @brief Call this in the main activity's onPause() method.
 /// Calling this is important if you'd like to save battery. When there is no audio playing and the app goes to the background, it will automatically stop audio input and/or output.
-  void onBackground();
+  void onBackground() override;
 
 /// @brief Starts audio input and/or output.
-  void start();
+  void start() override;
 
 /// @brief Stops audio input and/or output.
-  void stop();
+  void stop() override;
 
 private:
   SuperpoweredAndroidAudioIO * pInst;
