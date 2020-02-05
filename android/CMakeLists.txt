@@ -36,10 +36,13 @@ file(GLOB SUPERPOWERED_JNI_SRC
         ${TOP_DIR}/android/src/main/cpp/*.hpp
         ${OSAL_PLATFORM_SRC}
 
-
         ${TOP_DIR}/src_xplatform/json_command_handlers/*.cpp
         ${TOP_DIR}/src_xplatform/json_command_handlers/*.hpp
+        ${TOP_DIR}/src_xplatform/json_command_handlers/media_player/*.cpp
+        ${TOP_DIR}/src_xplatform/json_command_handlers/media_player/*.hpp
 
+        ${TOP_DIR}/src_xplatform/superpowered_if/*.cpp
+        ${TOP_DIR}/src_xplatform/superpowered_if/*.hpp
         ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/*.cpp
         ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/*.hpp
         ${TOP_DIR}/src_xplatform/superpowered_if/audio_io/android/*.cpp

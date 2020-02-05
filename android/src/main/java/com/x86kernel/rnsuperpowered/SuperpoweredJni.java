@@ -89,14 +89,14 @@ public class SuperpoweredJni {
             if (null == instance){
                 instance = new SuperpoweredJni();
                 final ReactApplicationContext ctx = RNSuperpoweredModule.getReactContextSingleton();
-                final String str = ctx.getCacheDir().toString();
-                SuperpoweredJni.init();
+                final String str = ctx.getCacheDir().getAbsolutePath().toString();
+                SuperpoweredJni.init(str);
             }
         }
         return instance;
     }
 
-    private static native void init();
+    private static native void init(String tempPath);
 
     public native void nativeJsonCommand(String jsonCmd);
 

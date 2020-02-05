@@ -8,6 +8,8 @@
 #include "task_sched/task_sched.h"
 #include "osal/osal.h"
 #include "json_command_handlers/json_command_handlers.hpp"
+#include <Superpowered/Superpowered.h>
+#include <Superpowered/SuperpoweredAdvancedAudioPlayer.h>
 
 
 #include <jni.h>
@@ -18,6 +20,8 @@
 #include <thread>
 #include <mutex>
 
+#include "utils/platform_log.h"
+LOG_MODNAME("jni_to_cpp.cpp");
 
 static void android_LogFn(void *pUserData, const uint32_t ts, const char *szLine, const int len) {
 #ifdef ANDROID
@@ -234,13 +238,31 @@ JsonHandler::JsonHandler() {
 extern "C"
 JNIEXPORT void Java_com_x86kernel_rnsuperpowered_SuperpoweredJni_init(
 		JNIEnv *env,
-    jclass obj
+    jclass obj,
+    jstring pathToCacheDir
 ) {
-  OSALInit();
-  TaskSchedInit();
-  LOG_Init(android_LogFn, nullptr);
-  JsonRegisterCommands();
+  static bool initialized = false;
+  if (!initialized) {
+    initialized = true;
+    OSALInit();
+    TaskSchedInit();
+    LOG_Init(android_LogFn, nullptr);
+    JsonRegisterCommands();
 
+    Superpowered::Initialize(
+        "ExampleLicenseKey-WillExpire-OnNextUpdate",
+        false, // enableAudioAnalysis (using SuperpoweredAnalyzer, SuperpoweredLiveAnalyzer, SuperpoweredWaveform or SuperpoweredBandpassFilterbank)
+        false, // enableFFTAndFrequencyDomain (using SuperpoweredFrequencyDomain, SuperpoweredFFTComplex, SuperpoweredFFTReal or SuperpoweredPolarFFT)
+        false, // enableAudioTimeStretching (using SuperpoweredTimeStretching)
+        false, // enableAudioEffects (using any SuperpoweredFX class)
+        true,  // enableAudioPlayerAndDecoder (using SuperpoweredAdvancedAudioPlayer or SuperpoweredDecoder)
+        false, // enableCryptographics (using Superpowered::RSAPublicKey, Superpowered::RSAPrivateKey, Superpowered::hasher or Superpowered::AES)
+        true  // enableNetworking (using Superpowered::httpRequest)
+    );
+    const char *str = env->GetStringUTFChars(pathToCacheDir, 0);
+    Superpowered::AdvancedAudioPlayer::setTempFolder(str);
+    env->ReleaseStringUTFChars(pathToCacheDir, str);
+  }
 }
 
 extern "C"
