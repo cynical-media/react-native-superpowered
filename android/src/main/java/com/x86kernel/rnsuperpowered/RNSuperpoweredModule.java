@@ -27,6 +27,7 @@ public class RNSuperpoweredModule extends ReactContextBaseJavaModule {
     return "RNSuperpowered";
   }
 
+  /*
   @ReactMethod
   public void startRecord(int sampleRate, int minSeconds, int numChannels, boolean applyFade) {
     Recorder recorder = Recorder.createInstance("temp.wav", sampleRate, minSeconds, numChannels, applyFade);
@@ -95,6 +96,8 @@ public class RNSuperpoweredModule extends ReactContextBaseJavaModule {
       
       promise.resolve(response);
   }
+
+   */
 
   @ReactMethod
   public void jsonCommand(String jsonCmd){

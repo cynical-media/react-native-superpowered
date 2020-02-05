@@ -5,6 +5,7 @@ import java.io.File;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 public class Audio {
+    /*
 	private static Audio instance = null;
 
 	private Audio() {}
@@ -59,4 +60,5 @@ public class Audio {
     public native void setPitchShift(int pitchShift);
 
     private native boolean process(String filePath);
+     */
 }

@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import com.facebook.react.bridge.ReactApplicationContext;
 
 public class Recorder {
+    /*
     private static Recorder instance = null;
     private static String tmpPath, dstPath;
 
@@ -59,4 +60,6 @@ public class Recorder {
 
     private native void startRecord(String dstPath);
     private native void stopRecord();
+
+     */
 }

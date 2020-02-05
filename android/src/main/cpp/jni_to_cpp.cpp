@@ -1,6 +1,5 @@
 #include "jni_locker.hpp"
 #include "jni_utils.hpp"
-#include "Audio.h"
 #include "osal/cs_task_locker.hpp"
 #include "phone_al/phone_al.hpp"
 #include "phone_al/json_handler.hpp"
@@ -84,7 +83,7 @@ typedef struct JniRunnableStructTag {
 } JniRunnableT;
 
 
-class HalClass: PhoneAL {
+class HalClass: public PhoneAL {
 public:
   jmethodID midTrace;
   jmethodID midJsonResponse;
@@ -101,13 +100,11 @@ public:
   , midRunOnUiThread(0)
   , runs(0)
   {
-    PakSchedInit(this);
   }
 
   // //////////////////////////////////////////////////////////////////////////////////
   ~HalClass(){
     CSTaskLocker cs;
-    PakSchedInit(nullptr);
   }
 
   // //////////////////////////////////////////////////////////////////////////////////
@@ -162,6 +159,11 @@ public:
 };
 
 static HalClass pakhal;
+
+// Called by the uithread scheduler and other stuff that needs the HAL.
+PhoneAL &PhoneAL::inst() {
+  return pakhal;
+}
 
 // JsonHandler is implemented in ios OR Android.
 static JsonHandler jsonHandler;

@@ -17,8 +17,7 @@
 #if (TARGET_OS_ANDROID)
 #include <SLES/OpenSLES.h>
 #include <SLES/OpenSLES_AndroidConfiguration.h>
-#include <AndroidIO/SuperpoweredAndroidAudioIO.h>
-#include "Recorder.h"
+#include <OpenSource/SuperpoweredAndroidAudioIO.h>
 #endif
 
 
@@ -86,9 +85,6 @@ static bool onToneCmd(CmdHandlerNodeData * const pCmdData){
   return true;
 }
 
-#if (TARGET_OS_ANDROID > 0)
-static Recorder *recorder = NULL;
-#endif
 
 typedef struct StartRecordingCmdTag {
   std::string filePath;
@@ -106,14 +102,6 @@ static bool onStartRecordingCmd(CmdHandlerNodeData * const pCmdData){
   const json &jIn = pCmdData->jsonIn;
   StartRecordingCmd s = jIn;
   json &jOut = pCmdData->jsonOut;
-#if (TARGET_OS_ANDROID > 0)
-  if (nullptr == recorder){
-    recorder = new Recorder(
-        s.filePath.c_str(),
-        (int)(0.5+s.sampleRate/100.0),
-        s.sampleRate, s.seconds, 2, false);
-  }
-#endif
 
   return true;
 }
@@ -153,17 +141,17 @@ static void SuperpoweredDecoderID3CallbackCbC(
 
 static void SuperpoweredDecoderFullyDownloadedCallbackCbC(
     void *clientData,
-    SuperpoweredDecoder *decoder){
+    Superpowered::Decoder *decoder){
 
   LOG_TRACE(("mp3 fully downloaded\r\n"));
 }
 
 struct decodeInfo{
-  SuperpoweredDecoder *decoder;
+  Superpowered::Decoder *decoder;
   std::string filepath;
 
   decodeInfo(
-      SuperpoweredDecoder *decoder
+      Superpowered::Decoder *decoder
       , const char *filepath)
       : decoder(decoder)
       , filepath(filepath)
@@ -174,6 +162,7 @@ struct decodeInfo{
 };
 
 static void try_to_open(void *p, uint32_t){
+#if 0
   struct decodeInfo *pDecodeInf = (struct decodeInfo *)p;
   int statCode = 0;
   auto &decoder = *pDecodeInf->decoder;
@@ -215,6 +204,7 @@ static void try_to_open(void *p, uint32_t){
       delete pDecodeInf;
     }
   }
+#endif
 }
 
 static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
@@ -222,16 +212,16 @@ static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
   StartPlaybackCmd s = jIn;
   if (s.filePath.length() > 0 ) {
 #if (TARGET_OS_ANDROID)
-    SuperpoweredAdvancedAudioPlayer::setTempFolder("/data/user/0/com.superpowered_test/cache");
+    Superpowered::AdvancedAudioPlayer::setTempFolder("/data/user/0/com.superpowered_test/cache");
 #else
     SuperpoweredAdvancedAudioPlayer::setTempFolder("/tmp");
 #endif
-    SuperpoweredDecoder *decoder = new SuperpoweredDecoder(
+    /*Superpowered::Decoder *decoder = new Superpowered::Decoder(
         SuperpoweredDecoderFullyDownloadedCallbackCbC,
-        nullptr);
+        nullptr);*/
 
-    struct decodeInfo *pDecodeInf = new decodeInfo(decoder, s.filePath.c_str());
-    try_to_open(pDecodeInf, 0);
+    //struct decodeInfo *pDecodeInf = new decodeInfo(decoder, s.filePath.c_str());
+    //try_to_open(pDecodeInf, 0);
 
   }
   json &jOut = pCmdData->jsonOut;
