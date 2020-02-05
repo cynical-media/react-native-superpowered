@@ -51,6 +51,8 @@ static const char cmd_gen_tone[] = "cmd_gen_tone";
 static const char cmd_start_recording[] = "cmd_start_recording";
 static const char cmd_stop_recording[] = "cmd_stop_recording";
 static const char cmd_start_playback[] = "cmd_start_playback";
+static const char cmd_set_playback_speed[] = "cmd_set_playback_speed";
+static const char cmd_set_playback_direction[] = "cmd_set_playback_direction";
 
 class MPHolder {
 public:
@@ -164,12 +166,48 @@ static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
   return true;
 }
 
+typedef struct StartPlaybackSpeedCmdTag {
+  float speed;
+} StartPlaybackSpeedCmdTag;
+
+void from_json(const nlohmann::json& j, StartPlaybackSpeedCmdTag& s) {
+  s.speed = j.value("speed", 1.0f);
+}
+static bool onSetPlaybackSpeedCmd(CmdHandlerNodeData * const pCmdData){
+  const json &jIn = pCmdData->jsonIn;
+  StartPlaybackSpeedCmdTag s = jIn;
+  MediaPlayer *player = MPHolder::inst().getMP();
+  player->setSpeed(s.speed);
+  json &jOut = pCmdData->jsonOut;
+  (void)jOut;
+  return true;
+}
+
+typedef struct StartPlaybackDirectionCmdTag {
+  bool reverse;
+} StartPlaybackDirectionCmdTag;
+
+void from_json(const nlohmann::json& j, StartPlaybackDirectionCmdTag& s) {
+  s.reverse = j.value("reverse", false);
+}
+static bool onSetPlaybackDirectionCmd(CmdHandlerNodeData * const pCmdData){
+  const json &jIn = pCmdData->jsonIn;
+  StartPlaybackDirectionCmdTag s = jIn;
+  MediaPlayer *player = MPHolder::inst().getMP();
+  player->setDirection(s.reverse);
+  json &jOut = pCmdData->jsonOut;
+  (void)jOut;
+  return true;
+}
+
 const CmdHandlerNode CmdHandlerNodeAry[] = {
     {cmd_invalid,             OnUnhandledCmd},
     {cmd_gen_tone,            onToneCmd},
     {cmd_start_recording,     onStartRecordingCmd},
     {cmd_stop_recording,      onStopRecordingCmd},
     {cmd_start_playback,      onStartPlaybackCmd},
+    {cmd_set_playback_speed,  onSetPlaybackSpeedCmd},
+    {cmd_set_playback_direction,  onSetPlaybackDirectionCmd},
 
 };
 

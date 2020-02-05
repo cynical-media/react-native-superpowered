@@ -26,6 +26,10 @@ public:
 
   bool stop();
 
+  void setSpeed(const float speed = 1.0f);
+
+  void setDirection(const bool reverse = false);
+
 private:
 
   static void waitForOpenC(void *p, uint32_t);

@@ -4,9 +4,11 @@
 #include <SuperpoweredSimple.h>
 #include <SuperpoweredCPU.h>
 #include <cstring>
+#include <cmath>
 #include "superpowered_if/audio_io/audio_io.hpp"
 #include "utils/platform_log.h"
 #include "task_sched/task_sched.h"
+#include "utils/helper_macros.h"
 
 LOG_MODNAME("media_player.cpp");
 
@@ -131,6 +133,26 @@ bool MediaPlayer::stop() {
   return true;
 }
 
+// ////////////////////////////////////////////////////////////////////////////
+void MediaPlayer::setSpeed(const float speed){
+  if (nullptr == mPlayer) return;
+  if (speed > 0) {
+    mPlayer->setReverse(false);
+  }
+  else {
+    mPlayer->setReverse(true);
+  }
+  float absspeed = fabs(speed);
+  absspeed = MAX(0.0000101, absspeed);
+  mPlayer->playbackRate = absspeed;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+void MediaPlayer::setDirection(const bool reverse){
+  if (nullptr == mPlayer) return;
+  mPlayer->setReverse(reverse);
+
+}
 
 // ////////////////////////////////////////////////////////////////////////////
 // This is called periodically by the audio engine.

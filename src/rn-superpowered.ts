@@ -210,3 +210,25 @@ export function StartPlayback(filePath:string){
     JsonCommands.cmd_start_playback, 
     dataObj);
 }
+
+//------------------------------------------------------------
+export function SetDirection(reverse:boolean){
+  let dataObj: JsonCommands.CmdSetPlaybackDirection = {
+    reverse: reverse,
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_set_playback_direction, 
+    dataObj);
+}
+
+//------------------------------------------------------------
+export function SetSpeed(speed:number){
+  let dataObj: JsonCommands.CmdSetPlaybackSpeed = {
+    speed: speed,
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_set_playback_speed, 
+    dataObj);
+}
