@@ -1,5 +1,4 @@
 #import "audio_io.hpp"
-#import "audio_io_ios.hpp"
 #import "SuperpoweredIOSAudioIO.h"
 #include "Superpowered.h"
 #include "SuperpoweredAdvancedAudioPlayer.h"
@@ -11,9 +10,7 @@ LOG_MODNAME("ios_audio");
 
 @interface AudioIO_IOS_objc: NSObject <AVAudioPlayerDelegate, AVAudioRecorderDelegate> {
 }
-//@property (nonatomic, strong, retain) CBCentralManager *cBCM;
-//@property (strong, nonatomic, retain) NSMutableArray *peripheralsAry;
-//@property (weak, nonatomic, getter=getApplication) UIApplication *application;
+
 @end
 
 class AudioIO_IOS: public AudioIO {
@@ -23,7 +20,7 @@ public:
     int buffersize,
     bool enableInput,
     bool enableOutput,
-    audioProcessingCallback callback,
+    StreamingAudioCallbackFn callback,
     void *clientdata,
     int inputStreamType = -1,
     int outputStreamType = -1);
@@ -70,7 +67,7 @@ protected:
     unsigned long long hostTime);
   
   AudioIO_IOS_objc *mpAudio;
-  audioProcessingCallback const mCallbackFn;
+  StreamingAudioCallbackFn const mCallbackFn;
   void * const mpClientData;
   sstring mAudioBuf;
 
@@ -89,12 +86,20 @@ protected:
             preferredBufferSize:(unsigned int)prefBufferSize
             preferredSamplerate:(unsigned int)prefsamplerate
             channels:(int)channels
-            audioProcessingCallback:(audioProcessingCallback)callback
+            callback:(audioProcessingCallback)callback
             clientdata:(void *)clientdata
 {
   self = [super init];
   
-  static const auto cb = [](void *clientData, float **inputBuffers, unsigned int inputChannels, float **outputBuffers, unsigned int outputChannels, unsigned int numberOfFrames, unsigned int samplerate, unsigned long long hostTime){
+  static const auto cb = []
+   (void *clientData,
+    float **inputBuffers,
+    unsigned int inputChannels,
+    float **outputBuffers,
+    unsigned int outputChannels,
+    unsigned int numberOfFrames,
+    unsigned int samplerate,
+    unsigned long long hostTime){
     AudioIO_IOS_objc *pSelf = (__bridge AudioIO_IOS_objc *)clientData;
     bool rval = pSelf->_userCallbackFn(
       pSelf->_userClientData,
@@ -144,7 +149,7 @@ AudioIO_IOS::AudioIO_IOS(
     int buffersize,
     bool enableInput,
     bool enableOutput,
-    audioProcessingCallback callback,
+    StreamingAudioCallbackFn callback,
     void *clientdata,
     int inputStreamType,
     int outputStreamType)
@@ -159,7 +164,7 @@ AudioIO_IOS::AudioIO_IOS(
                               preferredBufferSize:buffersize
                               preferredSamplerate:samplerate
                               channels:2
-                              audioProcessingCallback:audioProcessingCallbackCbC
+                              callback:audioProcessingCallbackCbC
                               clientdata:this];
     
 }
@@ -208,19 +213,18 @@ bool AudioIO_IOS::audioProcessingCallbackCb(
   
   if (outputBuffers){
     const size_t numSamples = outputChannels * numberOfFrames;
-    const int numBytes = (int)(numSamples * sizeof(int16_t));
-    int16_t * pOutputBuf = (int16_t *)mAudioBuf.u8DataPtr(numBytes, numBytes);
+    const int numBytes = (int)(numSamples * sizeof(float));
+    float * pOutputBuf = (float *)mAudioBuf.u8DataPtr(numBytes, numBytes);
     
     bool filledOk = false;
     if (mCallbackFn){
       filledOk = mCallbackFn(mpClientData, pOutputBuf, numberOfFrames, samplerate );
     }
     if (filledOk){
-      const float div = 1.0f/32768.0f;
       for (unsigned int ch = 0; ch < outputChannels; ch++){
         float * const chOut = outputBuffers[ch];
         for (unsigned int frame = 0; frame < numberOfFrames; frame++){
-          chOut[frame]= div*pOutputBuf[ch + frame*outputChannels];
+          chOut[frame]= pOutputBuf[ch + frame*outputChannels];
         }
       }
     }
@@ -254,7 +258,7 @@ AudioIO *AudioIO::createNew(
    int buffersize,
    bool enableInput,
    bool enableOutput,
-   audioProcessingCallback callback,
+   StreamingAudioCallbackFn callback,
    void *clientdata,
    int inputStreamType,
    int outputStreamType

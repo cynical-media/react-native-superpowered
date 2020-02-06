@@ -1,7 +1,10 @@
 #include <SLES/OpenSLES.h>
+#include <cstring>
 #include "audio_io_android.hpp"
 #include "utils/platform_log.h"
 #include "SLES/OpenSLES_AndroidConfiguration.h"
+#include "utils/helper_macros.h"
+#include <math.h>
 
 LOG_MODNAME("audio_io_android.cpp");
 
@@ -10,21 +13,47 @@ AndroidAudioIO::AndroidAudioIO(
       int buffersize,
       bool enableInput,
       bool enableOutput,
-      audioProcessingCallback callback,
+      StreamingAudioCallbackFn callback,
       void *clientdata,
       int inputStreamType,
       int outputStreamType)
 : AudioIO()
 , pInst( nullptr )
+, mpExternCb(callback)
+, mpExternData(clientdata)
+
 {
   LOG_TRACE(("%s:AndroidAudioIO()\r\n", dbgModId));
+
+  static const auto cb = [](void *clientdata, int16_t *buf16, int numberOfFrames, int samplerate) {
+    AndroidAudioIO *pThis = (AndroidAudioIO *) clientdata;
+    bool ok = false;
+    const size_t numBytes = sizeof(float)*numberOfFrames*2;
+    if (pThis->mpExternCb) {
+      float * pcm = (float *)pThis->mTmp.u8DataPtr(numBytes, numBytes);
+      const float div = 1.0f/32768.0f;
+      const float mul = 32767.0f;
+      for (int i = 0; i < numberOfFrames*2; i++){
+        pcm[i] = div*buf16[i];
+      }
+      ok = pThis->mpExternCb(pThis->mpExternData, pcm, numberOfFrames, samplerate);
+      for (int i = 0; i < numberOfFrames*2; i++){
+        buf16[i] = (int)roundf(pcm[i]*mul);
+      }
+    }
+    if (!ok){
+      memset(buf16, 0, sizeof(int16_t)*numberOfFrames*2);
+    }
+    return ok;
+  };
+
   pInst = new SuperpoweredAndroidAudioIO(
       samplerate,
       buffersize,
       enableInput,
       enableOutput,
-      callback,
-      clientdata,
+      cb,
+      (void *)this,
       SL_ANDROID_RECORDING_PRESET_GENERIC,
       SL_ANDROID_STREAM_MEDIA );
 
@@ -87,7 +116,7 @@ AudioIO *AudioIO::createNew(
     int buffersize,
     bool enableInput,
     bool enableOutput,
-    audioProcessingCallback callback,
+    StreamingAudioCallbackFn callback,
     void *clientdata,
     int inputStreamType,
     int outputStreamType

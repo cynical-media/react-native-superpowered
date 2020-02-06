@@ -2,6 +2,7 @@
 #define AUDIO_IO_ANDROID_HPP
 #include "OpenSource/SuperpoweredAndroidAudioIO.h"
 #include "superpowered_if/audio_io/audio_io.hpp"
+#include "utils/simple_string.hpp"
 
 class AndroidAudioIO : public AudioIO {
 public:
@@ -19,7 +20,7 @@ public:
       int buffersize,
       bool enableInput,
       bool enableOutput,
-      audioProcessingCallback callback,
+      StreamingAudioCallbackFn callback,
       void *clientdata,
       int inputStreamType = -1,
       int outputStreamType = -1);
@@ -42,6 +43,9 @@ public:
 
 private:
   SuperpoweredAndroidAudioIO * pInst;
+  sstring mTmp;
+  StreamingAudioCallbackFn mpExternCb;
+  void *mpExternData;
 };
 
 #endif

@@ -172,7 +172,7 @@ void MediaPlayer::setDirection(const bool reverse){
 // This is called periodically by the audio engine.
 bool MediaPlayer::audioProcessingC (
     void * clientdata, // custom pointer
-    short int *audio,           // output buffer
+    float *audio,           // output buffer
     int numberOfFrames,         // number of frames to process
     int samplerate              // current sample rate in Hz
 ){
@@ -189,7 +189,7 @@ bool MediaPlayer::audioProcessingC (
 // ////////////////////////////////////////////////////////////////////////////
 // This is called periodically by the audio engine.
 bool MediaPlayer::audioProcessing (
-    short int *audio,           // output buffer
+    float *audio,           // output buffer
     int numberOfFrames,         // number of frames to process
     int samplerate              // current sample rate in Hz
 ) {
@@ -199,13 +199,13 @@ bool MediaPlayer::audioProcessing (
     mPlayer->outputSamplerate = (unsigned int) samplerate;
 
     //float playerOutput[numberOfFrames * 2] = {0};
-    const size_t bufSize = sizeof(float)*numberOfFrames*2;
+    const int bufSize = (int)sizeof(float)*numberOfFrames*2;
     float * playerOutput = (float *)mAudioMem8.u8DataPtr(bufSize, bufSize);
     LOG_ASSERT((playerOutput));
     mNumFrames += numberOfFrames;
 
     if (mPlayer->processStereo(playerOutput, false, (unsigned int) numberOfFrames)) {
-      Superpowered::FloatToShortInt(playerOutput, audio, (unsigned int) numberOfFrames);
+      //Superpowered::FloatToShortInt(playerOutput, audio, (unsigned int) numberOfFrames);
       rval = true;
     }
     else {

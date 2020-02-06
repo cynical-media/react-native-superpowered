@@ -20,6 +20,7 @@ include_directories(
         ${TOP_DIR}
 )
 
+
 file(GLOB OSAL_PLATFORM_SRC
         ${TASK_SCHED_SRC}
         ${OSAL_SRC}

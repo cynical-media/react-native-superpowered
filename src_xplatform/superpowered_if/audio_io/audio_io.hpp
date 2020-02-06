@@ -14,7 +14,11 @@ public:
    @param numberOfFrames The number of frames received and/or requested.
    @param samplerate The current sample rate in Hz.
    */
-   typedef bool (*audioProcessingCallback) (void *clientdata, short int *audioIO, int numberOfFrames, int samplerate);
+   typedef bool (*StreamingAudioCallbackFn)(
+     void *pClientdata,
+     float *audioIO,
+     int numberOfFrames,
+     int samplerate);
 
   /** @brief Creates an audio I/O instance. Audio input and/or output immediately starts after calling this.
    @param samplerate The requested sample rate in Hz.
@@ -31,11 +35,11 @@ public:
       int buffersize,
       bool enableInput,
       bool enableOutput,
-      audioProcessingCallback callback,
-      void *clientdata,
+      StreamingAudioCallbackFn callbackFnPtr,
+      void *pClientdata,
       int inputStreamType = -1,
       int outputStreamType = -1
-       );
+   );
 
    // Default constructor
    AudioIO(){}

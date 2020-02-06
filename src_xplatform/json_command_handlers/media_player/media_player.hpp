@@ -37,15 +37,15 @@ private:
 
   static bool audioProcessingC (
       void * clientdata, // custom pointer
-      short int *audio,           // output buffer
-      int numberOfFrames,         // number of frames to process
-      int samplerate              // current sample rate in Hz
+      float *audio,      // input/output buffer
+      int numberOfFrames,// number of frames to process
+      int samplerate     // current sample rate in Hz
   );
 
   bool audioProcessing (
-      short int *audio,           // output buffer
-      int numberOfFrames,         // number of frames to process
-      int samplerate              // current sample rate in Hz
+      float *audio,      // input/output buffer (interleaved)
+      int numberOfFrames,// number of frames to process
+      int samplerate     // current sample rate in Hz
   );
 
   void startAudioIO();
