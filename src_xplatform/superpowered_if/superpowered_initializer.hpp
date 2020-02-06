@@ -5,7 +5,7 @@
 class SpInit {
 public:
   static SpInit &inst();
-  void init();
+  void init(const char *tmpDirectory = nullptr);
   ~SpInit();
 private:
   SpInit();

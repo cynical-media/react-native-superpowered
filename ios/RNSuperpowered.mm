@@ -5,6 +5,8 @@
 #import "json_command_handlers/json_command_handlers.hpp"
 #import "osal/osal.h"
 #import "task_sched/task_sched.h"
+//#include "Superpowered.h"
+#include "superpowered_initializer.hpp"
 
 static RNSuperpowered * pReactSvcInst = nullptr;
 
@@ -23,6 +25,8 @@ static void iosLogFn(void *pUserData, const uint32_t ts, const char *szLine, con
       TaskSchedInit();
       LOG_Init(iosLogFn, nullptr);
       JsonRegisterCommands();
+      SpInit::inst().init([NSTemporaryDirectory() fileSystemRepresentation]);
+
     }
     pReactSvcInst = self;
   }

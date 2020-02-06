@@ -58,7 +58,9 @@
 		83AC90FA23EA7C5D00C5F2B2 /* audio_io.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90F923EA7C5D00C5F2B2 /* audio_io.cpp */; };
 		83AC90FD23EA7C7100C5F2B2 /* audio_io_ios.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90FB23EA7C7100C5F2B2 /* audio_io_ios.cpp */; };
 		83AC90FF23EA7C9100C5F2B2 /* audio_io_ios_mm.mm in Sources */ = {isa = PBXBuildFile; fileRef = 83AC90FE23EA7C9100C5F2B2 /* audio_io_ios_mm.mm */; };
-		92E483D7224E8EDA0083EE13 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */; };
+		83AC911923EBCEDD00C5F2B2 /* media_player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC911723EBCEDC00C5F2B2 /* media_player.cpp */; };
+		83AC911C23EBD4BF00C5F2B2 /* libSuperpoweredAudioIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83AC911A23EBD48300C5F2B2 /* libSuperpoweredAudioIOS.a */; };
+		83AC911F23EBD87D00C5F2B2 /* superpowered_initializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83AC911E23EBD87D00C5F2B2 /* superpowered_initializer.cpp */; };
 		B3E7B58A1CC2AC0600A0062D /* RNSuperpowered.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */; };
 /* End PBXBuildFile section */
 
@@ -180,7 +182,11 @@
 		83AC90FB23EA7C7100C5F2B2 /* audio_io_ios.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = audio_io_ios.cpp; path = ../src_xplatform/superpowered_if/audio_io/ios/audio_io_ios.cpp; sourceTree = "<group>"; };
 		83AC90FC23EA7C7100C5F2B2 /* audio_io_ios.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = audio_io_ios.hpp; path = ../src_xplatform/superpowered_if/audio_io/ios/audio_io_ios.hpp; sourceTree = "<group>"; };
 		83AC90FE23EA7C9100C5F2B2 /* audio_io_ios_mm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = audio_io_ios_mm.mm; path = ../src_xplatform/superpowered_if/audio_io/ios/audio_io_ios_mm.mm; sourceTree = "<group>"; };
-		92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = ../Superpowered/libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
+		83AC911723EBCEDC00C5F2B2 /* media_player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = media_player.cpp; path = ../src_xplatform/json_command_handlers/media_player/media_player.cpp; sourceTree = "<group>"; };
+		83AC911823EBCEDD00C5F2B2 /* media_player.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = media_player.hpp; path = ../src_xplatform/json_command_handlers/media_player/media_player.hpp; sourceTree = "<group>"; };
+		83AC911A23EBD48300C5F2B2 /* libSuperpoweredAudioIOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSuperpoweredAudioIOS.a; path = ../Superpowered/Superpowered/libSuperpoweredAudioIOS.a; sourceTree = "<group>"; };
+		83AC911D23EBD87C00C5F2B2 /* superpowered_initializer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = superpowered_initializer.hpp; path = ../src_xplatform/superpowered_if/superpowered_initializer.hpp; sourceTree = "<group>"; };
+		83AC911E23EBD87D00C5F2B2 /* superpowered_initializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = superpowered_initializer.cpp; path = ../src_xplatform/superpowered_if/superpowered_initializer.cpp; sourceTree = "<group>"; };
 		92E483DB224E90DD0083EE13 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		92E483DD224E90E80083EE13 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		92E483DF224E90EF0083EE13 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -194,7 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92E483D7224E8EDA0083EE13 /* libSuperpoweredAudioIOS.a in Frameworks */,
+				83AC911C23EBD4BF00C5F2B2 /* libSuperpoweredAudioIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +248,7 @@
 		15E7D1EC23E76CC1009640BE /* json_command_handlers */ = {
 			isa = PBXGroup;
 			children = (
+				83AC911623EBCEA700C5F2B2 /* media_player */,
 				15E7D1ED23E76CE6009640BE /* json_command_handlers.cpp */,
 				15E7D1EE23E76CE6009640BE /* json_command_handlers.hpp */,
 			);
@@ -387,12 +394,12 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				83AC911A23EBD48300C5F2B2 /* libSuperpoweredAudioIOS.a */,
 				83AC90EF23EA709800C5F2B2 /* SuperpoweredIOSAudioIO.h */,
 				83AC90EC23EA709700C5F2B2 /* SuperpoweredIOSAudioIO.mm */,
 				83AC90ED23EA709700C5F2B2 /* SuperpoweredNBandEQ.cpp */,
 				83AC90EE23EA709800C5F2B2 /* SuperpoweredNBandEQ.h */,
 				15E7D1E423E71A9C009640BE /* src_xplatform */,
-				92E483CF224E5F7B0083EE13 /* libSuperpoweredAudioIOS.a */,
 				B3E7B5881CC2AC0600A0062D /* RNSuperpowered.h */,
 				B3E7B5891CC2AC0600A0062D /* RNSuperpowered.mm */,
 				134814211AA4EA7D00B7C361 /* Products */,
@@ -403,6 +410,8 @@
 		83AC90F523EA7BBD00C5F2B2 /* superpowered_if */ = {
 			isa = PBXGroup;
 			children = (
+				83AC911E23EBD87D00C5F2B2 /* superpowered_initializer.cpp */,
+				83AC911D23EBD87C00C5F2B2 /* superpowered_initializer.hpp */,
 				83AC90F623EA7BCE00C5F2B2 /* audio_io */,
 			);
 			name = superpowered_if;
@@ -426,6 +435,15 @@
 				83AC90FC23EA7C7100C5F2B2 /* audio_io_ios.hpp */,
 			);
 			name = ios;
+			sourceTree = "<group>";
+		};
+		83AC911623EBCEA700C5F2B2 /* media_player */ = {
+			isa = PBXGroup;
+			children = (
+				83AC911723EBCEDC00C5F2B2 /* media_player.cpp */,
+				83AC911823EBCEDD00C5F2B2 /* media_player.hpp */,
+			);
+			name = media_player;
 			sourceTree = "<group>";
 		};
 		92E483D6224E8EDA0083EE13 /* Frameworks */ = {
@@ -512,6 +530,7 @@
 				15E7D2A323E76F4C009640BE /* platform.c in Sources */,
 				15E7D26D23E76E89009640BE /* buf_alloc.cpp in Sources */,
 				15E7D27B23E76E9C009640BE /* task_sched.cpp in Sources */,
+				83AC911923EBCEDD00C5F2B2 /* media_player.cpp in Sources */,
 				15E7D24023E76E6E009640BE /* cs_task_locker.cpp in Sources */,
 				15E7D29E23E76F4C009640BE /* sha512.c in Sources */,
 				15E7D2A123E76F4C009640BE /* sha256.c in Sources */,
@@ -544,6 +563,7 @@
 				15E7D26923E76E89009640BE /* byteq.c in Sources */,
 				15E7D27D23E76E9C009640BE /* task_rescheduler.cpp in Sources */,
 				15E7D26B23E76E89009640BE /* simple_string.cpp in Sources */,
+				83AC911F23EBD87D00C5F2B2 /* superpowered_initializer.cpp in Sources */,
 				15E7D28D23E76EAD009640BE /* aes_alt.cpp in Sources */,
 				15E7D23C23E76E6E009640BE /* osal_stubs.cpp in Sources */,
 				15E7D26A23E76E89009640BE /* crc.cpp in Sources */,

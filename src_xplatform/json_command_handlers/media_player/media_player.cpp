@@ -9,6 +9,8 @@
 #include "utils/platform_log.h"
 #include "task_sched/task_sched.h"
 #include "utils/helper_macros.h"
+#include "osal/platform_type.h"
+#include <new>
 
 LOG_MODNAME("media_player.cpp");
 
@@ -23,7 +25,19 @@ MediaPlayer::MediaPlayer()
 {
   // TODO: Do in jni layer
   //  Superpowered::AdvancedAudioPlayer::setTempFolder(tempFolder);
-  mPlayer = new Superpowered::AdvancedAudioPlayer(mFs, 0);
+  #if (TARGET_OS_IOS)
+  try {
+  #endif
+    static char aapmem[sizeof(Superpowered::AdvancedAudioPlayer)];
+    mPlayer = new (aapmem) Superpowered::AdvancedAudioPlayer(mFs, 32);
+  #if (TARGET_OS_IOS)
+  }
+  catch(int e){
+    mPlayer = nullptr;
+    LOG_TRACE(("Failure to create new AAP, error = %d\r\n"));
+    LOG_ASSERT(false);
+  }
+  #endif
 
 }
 

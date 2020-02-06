@@ -145,7 +145,7 @@ static bool onStopRecordingCmd(CmdHandlerNodeData * const pCmdData){
   //LOG_TRACE(("Got cmd_tone with freq = %f and scale = %f\r\n", s.freq, s.scale));
   return true;
 }
-
+#include <cstring>
 typedef struct StartPlaybackCmdTag {
   std::string filePath;
 } StartPlaybackCmd;
@@ -159,7 +159,12 @@ static bool onStartPlaybackCmd(CmdHandlerNodeData * const pCmdData){
   if (s.filePath.length() > 0 ) {
     LOG_TRACE(("s.filepath = %s", s.filePath.c_str()));
     MediaPlayer *player = MPHolder::inst().getMP();
-    player->open(s.filePath.c_str());
+    if (0 == s.filePath.compare(0, 4, "http")){      
+      player->open(s.filePath.c_str());
+    }
+    else {
+      player->open(s.filePath.c_str());
+    }
   }
   json &jOut = pCmdData->jsonOut;
   (void)jOut;
