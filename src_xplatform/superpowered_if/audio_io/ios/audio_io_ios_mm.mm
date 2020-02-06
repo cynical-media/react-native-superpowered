@@ -213,7 +213,7 @@ bool AudioIO_IOS::audioProcessingCallbackCb(
     
     bool filledOk = false;
     if (mCallbackFn){
-      mCallbackFn(mpClientData, pOutputBuf, numberOfFrames, samplerate );
+      filledOk = mCallbackFn(mpClientData, pOutputBuf, numberOfFrames, samplerate );
     }
     if (filledOk){
       const float div = 1.0f/32768.0f;
