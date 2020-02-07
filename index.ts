@@ -14,16 +14,25 @@ const jsonEmitter = (Platform.OS == 'ios')
   : DeviceEventEmitter;  
 
 
-var superpoweredInst = null;
+  type CmdResponse = {
+    json:string;
+  };
+
+  type CmdResponseParsed = {
+    rsp:string;
+    rspData?: Object;
+  };
 
 //------------------------------------------------------------------------------
 export class SuperpoweredApi {
+  private static superpoweredInst:SuperpoweredApi;
 
   //eventListeners:any = {};
-  eventListeners: Map<string, Array<(e:any)=>void>> = new Map();
-  localCommandId:number = 0; //< This increments with every issued command.
-  eventSubscription:any = null;
-  pendingCmdMap:Object = {};
+  //private eventListeners: Map<string, Array<(e:any)=>void>> = new Map();
+  private eventListeners: { [key: string]: Array<(e:any)=>void> } = {};
+  private localCommandId:number = 0; //< This increments with every issued command.
+  private eventSubscription:any = null;
+  private pendingCmdMap: { [key: string]: any } = {};
 
   constructor(){
     console.log("Creating Superpowered Class");
@@ -34,15 +43,15 @@ export class SuperpoweredApi {
     });    
   }
 
-  static inst(){
-    if (null == superpoweredInst){
-      superpoweredInst = new SuperpoweredApi;
+  public static inst():SuperpoweredApi{
+    if (!SuperpoweredApi.superpoweredInst){
+      SuperpoweredApi.superpoweredInst = new SuperpoweredApi();
     }
-    return superpoweredInst;
+    return SuperpoweredApi.superpoweredInst;
   }
 
   //------------------------------------------------------------------------------
-  jsonCommand(commandStr, commandDataObject){
+  jsonCommand(commandStr:string, commandDataObject:Object = {}){
 
     let cmdData = (commandDataObject) ? commandDataObject : {};
     let cmdObj = {
@@ -100,16 +109,15 @@ export class SuperpoweredApi {
   }
 
   //------------------------------------------------------------------------------
-  _handleJsonDispatch(robj){
+  _handleJsonDispatch(robj:CmdResponseParsed){
     console.log("Got response " + robj.rsp);
-    var rval = {
-      rsp: robj.rsp,
-      rspData:null,
+    let rval:CmdResponseParsed = {
+      rsp: robj.rsp
     };
 
     if ((robj.rsp) && (robj.rspData) && (robj.rsp in this.eventListeners)) {
       var listenerArray = this.eventListeners[robj.rsp];
-      var x = {};
+      var x:{ [key: string]: any } = {};
       x[robj.rsp] = {...robj.rspData};
       rval.rspData = {...x};
       rval = {...rval, ...robj};
@@ -122,8 +130,9 @@ export class SuperpoweredApi {
     }
   }
 
+
   //------------------------------------------------------------------------------
-  _handleJsonEvent(e){
+  _handleJsonEvent(e:CmdResponse){
     let robj = JSON.parse(e.json);
     //let robjStr = JSON.stringify(robj);
     let pendingCmd = null;
@@ -158,6 +167,34 @@ export class SuperpoweredApi {
   }
 }
 
+export function InitializeSuperpowered(
+  _licenseKey?: string,
+  _enableAudioAnalysis: boolean = false,
+  _enableFFTAndFrequencyDomain: boolean = false,
+  _enableAudioTimeStretching: boolean = true,
+  _enableAudioEffects: boolean = false,
+  _enableAudioPlayerAndDecoder: boolean = true,
+  _enableCryptographics: boolean = false,
+  _enableNetworking: boolean = true,
+){
+  //CmdInitializeSuperpowered
+  let dataObj: JsonCommands.CmdInitializeSuperpowered = {
+    licenseKey: ((_licenseKey) && (_licenseKey.length > 2)) ? _licenseKey : '',
+    enableAudioAnalysis: _enableAudioAnalysis,
+    enableFFTAndFrequencyDomain: _enableFFTAndFrequencyDomain,
+    enableAudioTimeStretching: _enableAudioTimeStretching,
+    enableAudioEffects: _enableAudioEffects,
+    enableAudioPlayerAndDecoder: _enableAudioPlayerAndDecoder,
+    enableCryptographics: _enableCryptographics,
+    enableNetworking: _enableNetworking,
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_initialize_superpowered, 
+    dataObj);  
+}
+
+/*
 //------------------------------------------------------------
 export function GenerateTone(
   freq:number, scale:number
@@ -199,6 +236,7 @@ export function StopRecording(){
     JsonCommands.cmd_stop_recording, 
     dataObj);
 }
+*/
 
 //------------------------------------------------------------
 export function StartPlayback(filePath:string){
@@ -208,6 +246,16 @@ export function StartPlayback(filePath:string){
   
   SuperpoweredApi.inst().jsonCommand(
     JsonCommands.cmd_start_playback, 
+    dataObj);
+}
+
+//------------------------------------------------------------
+export function StopPlayback(){
+  let dataObj: JsonCommands.CmdStopPlayback = {
+  };
+  
+  SuperpoweredApi.inst().jsonCommand(
+    JsonCommands.cmd_stop_playback, 
     dataObj);
 }
 

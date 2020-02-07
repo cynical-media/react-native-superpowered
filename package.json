@@ -2,7 +2,7 @@
   "name": "react-native-superpowered",
   "version": "1.0.7",
   "description": "Implementation of the Superpowered audio engine SDK For React Native",
-  "main": "index.js",
+  "main": "index.ts",
   "keywords": [
     "react-native"
   ],
@@ -18,5 +18,8 @@
     "url": "https://github.com/cfogelklou/react-native-superpowered"
   },
   "license": "",
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "devDependencies": {
+    "tsc": "^1.20150623.0"
+  }
 }
