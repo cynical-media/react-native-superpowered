@@ -1,4 +1,6 @@
 
+/* eslint-disable prettier/prettier */
+
 export const cmd_invalid:string = 'cmd_invalid';
 export const cmd_initialize_superpowered:string = 'cmd_initialize_superpowered';
 //export const cmd_gen_tone:string = 'cmd_gen_tone';
@@ -22,7 +24,7 @@ export const cmd_set_playback_direction:string = 'cmd_set_playback_direction';
 /// @param enableCryptographics Enables RSAPublicKey,RSAPrivateKey, hasher and AES.
 /// @param enableNetworking Enables httpRequest.
 export type CmdInitializeSuperpowered  = {
-  licenseKey: string;
+  licenseKey?: string;
   enableAudioAnalysis: boolean;
   enableFFTAndFrequencyDomain: boolean;
   enableAudioTimeStretching: boolean;

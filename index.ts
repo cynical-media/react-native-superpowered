@@ -1,4 +1,5 @@
 /* eslint */
+/* eslint-disable prettier/prettier */
 
 import { 
   Platform, NativeModules, NativeEventEmitter, DeviceEventEmitter
