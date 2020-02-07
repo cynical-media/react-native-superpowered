@@ -24,6 +24,7 @@ public:
       Superpowered::httpRequest *customHTTPRequest = 0,
       bool skipSilenceAtBeginning = false);
 
+  bool start();
   bool stop();
 
   void setSpeed(const float speed = 1.0f);

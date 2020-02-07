@@ -56,9 +56,12 @@ void MediaPlayer::open(
     Superpowered::httpRequest *customHTTPRequest,
     bool skipSilenceAtBeginning )
 {
-  mPlayer->open(path, customHTTPRequest, skipSilenceAtBeginning);
+  if (!mOpening){
+    mOpening = true;
+    mPlayer->open(path, customHTTPRequest, skipSilenceAtBeginning);
 
-  waitForOpen();
+    waitForOpen();
+  }
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -68,9 +71,12 @@ void MediaPlayer::open(const char *path,
           Superpowered::httpRequest *customHTTPRequest,
           bool skipSilenceAtBeginning)
 {
-  mPlayer->open(path, offset, length, customHTTPRequest, skipSilenceAtBeginning);
+  if (!mOpening){
+    mOpening = true;
+    mPlayer->open(path, offset, length, customHTTPRequest, skipSilenceAtBeginning);
 
-  waitForOpen();
+    waitForOpen();
+  }
 }
 
 // ////////////////////////////////////////////////////////////////////////////
@@ -125,25 +131,39 @@ void MediaPlayer::waitForOpen(){
 
 // ////////////////////////////////////////////////////////////////////////////
 void MediaPlayer::startAudioIO() {
-
-  mpAudioIO = AudioIO::createNew(
-      mFs,                     // device native sampling rate
-      mFs / 100,                 // device native buffer size
-      false,                   // enableInput
-      true,                    // enableOutput
-      audioProcessingC,        // process callback function
-      this
-  );
-  mPlayer->play();
+  if (nullptr == mPlayer) return;
+  if (nullptr == mpAudioIO){
+    mpAudioIO = AudioIO::createNew(
+        mFs,                     // device native sampling rate
+        mFs / 100,                 // device native buffer size
+        false,                   // enableInput
+        true,                    // enableOutput
+        audioProcessingC,        // process callback function
+        this
+    );
+    mPlayer->play();
+  }
   Superpowered::CPU::setSustainedPerformanceMode(true);
 }
 
 // ////////////////////////////////////////////////////////////////////////////
 bool MediaPlayer::stop() {
+  if (nullptr == mPlayer) return false;
   if (mPlayer->isPlaying()) {
     mPlayer->togglePlayback();
   }
   Superpowered::CPU::setSustainedPerformanceMode(false);
+
+  return true;
+}
+
+// ////////////////////////////////////////////////////////////////////////////
+bool MediaPlayer::start(){
+  if (nullptr == mPlayer) return false;
+  if (!mPlayer->isPlaying()) {
+    mPlayer->togglePlayback();
+  }
+  Superpowered::CPU::setSustainedPerformanceMode(true);
   return true;
 }
 
