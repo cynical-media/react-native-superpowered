@@ -130,7 +130,6 @@ export class SuperpoweredApi {
     }
   }
 
-
   //------------------------------------------------------------------------------
   _handleJsonEvent(e:CmdResponse){
     let robj = JSON.parse(e.json);
